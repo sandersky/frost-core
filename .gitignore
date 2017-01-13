@@ -1,0 +1,9 @@
+# File system files
+.DS_Store
+
+# Installed dependencies
+/node_modules
+
+# Compiled source
+/coverage
+/lib

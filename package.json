@@ -1,0 +1,39 @@
+{
+  "name": "frost-core",
+  "version": "0.0.0",
+  "description": "Core components for the Frost UI library",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "karma start"
+  },
+  "repository": "git@github.com:ciena-frost/frost-core.git",
+  "engines": {
+    "node": ">= 6.0.0"
+  },
+  "keywords": [
+    "frost"
+  ],
+  "author": "Matthew Dahl (https://github.com/sandersky)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ciena-frost/frost-core/issues"
+  },
+  "homepage": "https://ciena-frost.github.io/frost-core",
+  "devDependencies": {
+    "babel-plugin-istanbul": "^3.1.2",
+    "babel-plugin-transform-es2015-modules-umd": "^6.18.0",
+    "babel-plugin-transform-export-extensions": "^6.8.0",
+    "babel-preset-es2015": "^6.18.0",
+    "chai": "^3.5.0",
+    "karma": "^1.3.0",
+    "karma-babel-preprocessor": "^6.0.1",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-coverage": "^1.1.1",
+    "karma-mocha": "^1.3.0",
+    "mocha": "^3.2.0"
+  }
+}
