@@ -1,0 +1,50 @@
+// General
+$frost-button-background-color: transparent !default;
+$frost-button-border: 0 !default;
+$frost-button-border-radius: 2px !default;
+$frost-button-color: $frost-color-white !default;
+$frost-button-font-family: $frost-font-family !default;
+$frost-button-padding: 0 !default;
+
+// Large priority
+$frost-button-large-font-size: $frost-font-l !default;
+$frost-button-large-height: 50px !default;
+$frost-button-large-padding: 0 20px !default;
+
+// Medium priority
+$frost-button-medium-font-size: $frost-font-m !default;
+$frost-button-medium-height: 40px !default;
+$frost-button-medium-padding: 0 20px !default;
+
+// Small priority
+$frost-button-small-font-size: $frost-font-s !default;
+$frost-button-small-height: 30px !default;
+$frost-button-small-padding: 0 10px !default;
+
+frost-button {
+  background-color: $frost-button-background-color;
+  border: $frost-button-border;
+  border-radius: $frost-button-border-radius;
+  color: $frost-button-color;
+  cursor: pointer;
+  font-family: $frost-button-font-family;
+  padding: $frost-button-padding;
+
+  &[priority="large"] {
+    font-size: $frost-button-large-font-size;
+    height: $frost-button-large-height;
+    padding: $frost-button-large-padding;
+  }
+
+  &[priority="medium"] {
+    font-size: $frost-button-medium-font-size;
+    height: $frost-button-medium-height;
+    padding: $frost-button-medium-padding;
+  }
+
+  &[priority="small"] {
+    font-size: $frost-button-small-font-size;
+    height: $frost-button-small-height;
+    padding: $frost-button-small-padding;
+  }
+}
