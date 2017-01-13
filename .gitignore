@@ -6,4 +6,5 @@
 
 # Compiled source
 /coverage
-/lib
+/demo/frost-core.min.js
+/dist
