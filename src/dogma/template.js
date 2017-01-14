@@ -3,6 +3,23 @@ import {isCharWhitespace} from '../utils/string'
 const {isArray} = Array
 
 /**
+ * Determine if currentToken or other remaining tokens contain any
+ * non-whitespace characters.
+ * @param {String} currentToken - current token being parsed
+ * @param {Number} start - index of where to resume parsing current token
+ * @param {Array<Any>} tokens - remaining tokens to parse
+ * @returns {Boolean} whether or not non-whitespace characters remain
+ */
+function containsNonWhitesapce ({currentToken, start, tokens}) {
+  const pattern = /^\s*$/
+  const isRemainingAllWhitespace = pattern.test(currentToken.slice(start))
+  const doOtherTokensContainNonWhitespace = tokens
+    .some((token) => typeof(token) !== 'string' || !pattern.test(token))
+
+  return !isRemainingAllWhitespace || doOtherTokensContainNonWhitespace
+}
+
+/**
  * Insert processed substitution expressions into string literals from template
  * literal to have a single array of all pieces in the order they occur in the
  * template literal.
@@ -55,9 +72,23 @@ function jumpToFirstNonWhitespaceChar (tokens) {
   }
 }
 
+function parseChildNodes ({currentToken, tokens, start}) {
+  const childNodes = []
+
+  // When no children and parent is actually just being closed
+  if (currentToken[start] === '<' && currentToken[start + 1] === '/') {
+    return {
+      childNodes,
+      end: start + 2
+    }
+  }
+
+  // TODO: parse children
+}
+
 function parseElement ({allowSiblings, currentToken, start, tokens}) {
   const element = {
-    tag: ''
+    localName: ''
   }
 
   // Get tag name (i.e. get "foo-bar" from <foo-bar baz="test">)
@@ -66,16 +97,59 @@ function parseElement ({allowSiblings, currentToken, start, tokens}) {
     currentToken[start] !== '>' &&
     currentToken[start] !== '/'
   ) {
-    element.tag += currentToken[start]
+    element.localName += currentToken[start]
     start += 1
   }
 
+  // TODO: process whitespace
+
+  // If element tag is inline (i.e. <foo-bar/> instead of <foo-bar></foo-bar>)
   if (currentToken[start] === '/') {
     if (currentToken[start + 1] !== '>') {
-      throw new Error(`Missing > on closing tag "${element.tag}"`)
+      throw new Error(`Missing > on closing tag "${element.localName}"`)
     }
 
-    // TODO: decide what to do next based on allowSiblings option
+    if (allowSiblings === false) {
+      if (containsNonWhitesapce({currentToken, tokens, start: start + 2})) {
+        throw new Error(
+          `Element "${element.localName}" is not allowed to have any siblings`
+        )
+      }
+
+      return element
+    }
+  }
+
+  // If element tag is not inline (i.e. <foo></foo> instead of <foo/>)
+  if (currentToken[start] === '>') {
+    start += 1
+
+    const {childNodes, end} = parseChildNodes({currentToken, tokens, start})
+
+    const actualClosingTag = currentToken.slice(
+      start,
+      start + element.localName.length + 3
+    )
+
+    const expectedClosingTag = `</${element.localName}>`
+
+    if (actualClosingTag !== expectedClosingTag) {
+      throw new Error(
+        `Expected "${actualClosingTag}" to be "${expectedClosingTag}"`
+      )
+    }
+
+    start += expectedClosingTag.length
+
+    if (allowSiblings === false) {
+      if (containsNonWhitesapce({currentToken, tokens, start})) {
+        throw new Error(
+          `Element "${element.localName}" is not allowed to have any siblings`
+        )
+      }
+
+      return element
+    }
   }
 
   // TODO: decide what to do next

@@ -99,6 +99,8 @@ export function createComponent (superclass) {
       if (typeof this.render === 'function') {
         tree = this.render()
         rootNode = toDom(tree)
+        this.innerHTML = ''
+        this.append(...rootNode.childNodes)
       }
     }
 

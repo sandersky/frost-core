@@ -32,13 +32,17 @@ class FrostCodeExamplesBase extends HTMLDivElement {
       .join('')
 
     return t`
-      <div>
-        <ul data-name="scroll-spy">
-          ${listItems}
-        </ul>
-        <div data-name="examples">${this.state.examples}</div>
-      </div>
+      <div/>
     `
+
+    // return t`
+    //   <div>
+    //     <ul data-name="scroll-spy">
+    //       ${listItems}
+    //     </ul>
+    //     <div data-name="examples">${this.state.examples}</div>
+    //   </div>
+    // `
   }
 
   componentDidUpdate () {
