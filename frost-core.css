@@ -1,0 +1,41 @@
+frost-button {
+  background-color: transparent;
+  border: 0;
+  border-radius: 2px;
+  color: #fff;
+  cursor: pointer;
+  font-family: Roboto, Arial, sans-serif;
+  padding: 0; }
+  frost-button[priority="primary"] {
+    background: linear-gradient(#37bbff, #009eef);
+    color: #fff; }
+  frost-button[priority="secondary"] {
+    background-color: #fff;
+    border: 2px solid #009eef;
+    color: #009eef; }
+  frost-button[priority="tertiary"] {
+    background-color: inherit;
+    color: #009eef; }
+  frost-button[size="large"] {
+    font-size: 23px;
+    height: 50px;
+    padding: 0 20px; }
+  frost-button[size="medium"] {
+    font-size: 18px;
+    height: 40px;
+    padding: 0 20px; }
+  frost-button[size="small"] {
+    font-size: 14px;
+    height: 30px;
+    padding: 0 10px; }
+
+frost-code-example {
+  flex: 0 1 auto;
+  margin: 10px; }
+
+frost-code-examples section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; }
+  frost-code-examples section header {
+    flex-basis: 100%; }
