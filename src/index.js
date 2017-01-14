@@ -1,3 +1,6 @@
+// Include polyfill for document.registerElement()
+import 'document-register-element'
+
 import FrostButton from './components/frost-button'
 import FrostCheckbox from './components/frost-checkbox'
 import FrostCodeExample from './components/frost-code-example'
