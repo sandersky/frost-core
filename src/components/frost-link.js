@@ -1,4 +1,4 @@
-import reactComponent from '../mixins/react-component'
+import {createComponent} from '../react'
 
 class FrostLinkBase extends HTMLAnchorElement {
   getDefaultProps () {
@@ -7,4 +7,4 @@ class FrostLinkBase extends HTMLAnchorElement {
   }
 }
 
-export default class FrostLink extends reactComponent(FrostLinkBase) {}
+export default class FrostLink extends createComponent(FrostLinkBase) {}

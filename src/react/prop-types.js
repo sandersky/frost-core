@@ -1,4 +1,4 @@
-function applyDefaults (defaults) {
+export function applyDefaults (defaults) {
   Object.keys(defaults)
     .forEach((key) => {
       if (this.getAttribute(key) === null) {
@@ -7,25 +7,7 @@ function applyDefaults (defaults) {
     })
 }
 
-function getNewState (incomingState, state) {
-  const newState = {}
-
-  Object.keys(state).forEach((key) => {
-    if (key in incomingState) {
-      return
-    }
-
-    newState[key] = state[key]
-  })
-
-  Object.keys(incomingState).forEach((key) => {
-    newState[key] = incomingState[key]
-  })
-
-  return newState
-}
-
-function getProps () {
+export function getProps () {
   if (typeof this.propTypes !== 'object') {
     return {}
   }
@@ -51,7 +33,7 @@ function isValuePresent ({key, value, required}) {
   return false
 }
 
-function validatePropTypes () {
+export function validatePropTypes () {
   Object.keys(this.propTypes).forEach((key) => {
     const validator = this.propTypes[key]
 
@@ -101,7 +83,6 @@ export const PropTypes = {
         const vowels = ['a', 'e', 'i', 'o', 'u']
         const determiner = vowels.indexOf(type[0]) === -1 ? 'a' : 'an'
 
-        debugger
         throw new Error(
           `propType "${key}" was given ${determiner} ${type} when it expected` +
           `a string`
@@ -110,62 +91,3 @@ export const PropTypes = {
     }
   }
 }
-
-const reactComponent = (superclass) => class extends superclass {
-  createdCallback () {
-    this.props = getProps.call(this)
-    this.state = {}
-
-    this.setState = (incomingState) => {
-      const newState = getNewState(incomingState, this.state)
-
-      if (typeof this.componentWillUpdate === 'function') {
-        this.componentWillUpdate(newState)
-      }
-
-      Object.assign(this.state, newState)
-
-      if (typeof this.render === 'function') {
-        this.render()
-      }
-    }
-
-    if (this.propTypes) {
-      validatePropTypes.call(this)
-    }
-
-    if (this.getDefaultProps) {
-      applyDefaults.call(this, this.getDefaultProps())
-    }
-
-    if (typeof this.componentWillMount === 'function') {
-      this.componentWillMount()
-    }
-
-    if (typeof this.render === 'function') {
-      this.innerHTML = this.render()
-    }
-  }
-
-  attachedCallback () {
-    if (typeof this.componentDidMount === 'function') {
-      this.componentDidMount()
-    }
-  }
-
-  attributeChangedCallback (key, oldValue, newValue) {
-    this.props[key] = newValue
-
-    if (typeof this.render === 'function') {
-      this.render()
-    }
-  }
-
-  detachedCallback () {
-    if (typeof this.componentWillUnmount === 'function') {
-      this.componentWillUnmount()
-    }
-  }
-}
-
-export default reactComponent

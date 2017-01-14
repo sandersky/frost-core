@@ -1,4 +1,4 @@
-import reactComponent from '../mixins/react-component'
+import {createComponent} from '../react'
 
 class FrostPasswordBase extends HTMLInputElement {
   getDefaultProps () {
@@ -7,4 +7,4 @@ class FrostPasswordBase extends HTMLInputElement {
   }
 }
 
-export default class FrostPassword extends reactComponent(FrostPasswordBase) {}
+export default class FrostPassword extends createComponent(FrostPasswordBase) {}

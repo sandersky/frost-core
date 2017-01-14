@@ -1,4 +1,4 @@
-import reactComponent from '../mixins/react-component'
+import {createComponent} from '../react'
 
 class FrostCheckboxBase extends HTMLInputElement {
   getDefaultProps () {
@@ -7,4 +7,4 @@ class FrostCheckboxBase extends HTMLInputElement {
   }
 }
 
-export default class FrostCheckbox extends reactComponent(FrostCheckboxBase) {}
+export default class FrostCheckbox extends createComponent(FrostCheckboxBase) {}

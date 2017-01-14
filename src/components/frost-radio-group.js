@@ -1,4 +1,4 @@
-import reactComponent from '../mixins/react-component'
+import {createComponent} from '../react'
 
 class FrostRadioGroupBase extends HTMLInputElement {
   getDefaultProps () {
@@ -7,4 +7,4 @@ class FrostRadioGroupBase extends HTMLInputElement {
   }
 }
 
-export default class FrostRadioGroup extends reactComponent(FrostRadioGroupBase) {}
+export default class FrostRadioGroup extends createComponent(FrostRadioGroupBase) {}

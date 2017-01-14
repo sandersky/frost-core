@@ -1,4 +1,4 @@
-import reactComponent from '../mixins/react-component'
+import {createComponent} from '../react'
 
 class FrostScrollBase extends HTMLDivElement {
   getDefaultProps () {
@@ -7,4 +7,4 @@ class FrostScrollBase extends HTMLDivElement {
   }
 }
 
-export default class FrostScroll extends reactComponent(FrostScrollBase) {}
+export default class FrostScroll extends createComponent(FrostScrollBase) {}

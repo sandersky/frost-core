@@ -1,4 +1,4 @@
-import reactComponent, {PropTypes} from '../mixins/react-component'
+import {PropTypes, createComponent} from '../react'
 
 const htmlCharReplacements = {
   '&': '&amp;',
@@ -39,4 +39,4 @@ class FrostCodeExampleBase extends HTMLDivElement {
   }
 }
 
-export default class FrostCodeExample extends reactComponent(FrostCodeExampleBase) {}
+export default class FrostCodeExample extends createComponent(FrostCodeExampleBase) {}
