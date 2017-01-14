@@ -1,2 +1,8 @@
 frost-code-example {
+  // Make sure code blocks have a monospaced font
+  code[class*="language-"], pre[class*="language-"] {
+    * {
+      font-family: $frost-font-family-monospaced;
+    }
+  }
 }

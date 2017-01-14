@@ -15,3 +15,7 @@
 @import './components/frost-text';
 @import './components/frost-textarea';
 @import './components/frost-toggle';
+
+* {
+  font-family: $frost-font-family;
+}
