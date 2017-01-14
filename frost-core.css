@@ -1,41 +1,66 @@
 frost-button {
-  background-color: transparent;
+  align-items: center;
+  background: transparent;
   border: 0;
   border-radius: 2px;
   color: #fff;
   cursor: pointer;
+  display: inline-flex;
   font-family: Roboto, Arial, sans-serif;
   padding: 0; }
+  frost-button:active {
+    outline: none; }
+  frost-button:focus {
+    box-shadow: 0 1px 6px rgba(0, 158, 239, 0.75);
+    outline: none; }
   frost-button[priority="primary"] {
     background: linear-gradient(#37bbff, #009eef);
     color: #fff; }
+    frost-button[priority="primary"]:not(:disabled):active {
+      background: #1e9de5;
+      color: #a1e7ff; }
+    frost-button[priority="primary"]:not(:disabled):focus {
+      border: solid 2px #a1e7ff; }
+    frost-button[priority="primary"]:not(:disabled):hover {
+      background: #43c9f7; }
   frost-button[priority="secondary"] {
-    background-color: #fff;
+    background: #fff;
     border: 2px solid #009eef;
     color: #009eef; }
+    frost-button[priority="secondary"]:not(:disabled):active {
+      background: #e7eef3;
+      color: #43c9f7; }
+    frost-button[priority="secondary"]:not(:disabled):hover {
+      background: rgba(0, 158, 239, 0.1); }
   frost-button[priority="tertiary"] {
-    background-color: inherit;
+    background: inherit;
     color: #009eef; }
+    frost-button[priority="tertiary"]:not(:disabled):active {
+      background: #e7eef3;
+      color: #43c9f7; }
+    frost-button[priority="tertiary"]:not(:disabled):focus {
+      box-shadow: 1px solid #a1e7ff;
+      outline: none; }
+    frost-button[priority="tertiary"]:not(:disabled):hover {
+      background: rgba(0, 158, 239, 0.05); }
   frost-button[size="large"] {
     font-size: 23px;
     height: 50px;
     padding: 0 20px; }
+    frost-button[size="large"] frost-icon {
+      height: 35px;
+      width: 35px; }
   frost-button[size="medium"] {
     font-size: 18px;
     height: 40px;
     padding: 0 20px; }
+    frost-button[size="medium"] frost-icon {
+      height: 30px;
+      width: 30px; }
   frost-button[size="small"] {
     font-size: 14px;
     height: 30px;
     padding: 0 10px; }
-
-frost-code-example {
-  flex: 0 1 auto;
-  margin: 10px; }
-
-frost-code-examples section {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between; }
-  frost-code-examples section header {
-    flex-basis: 100%; }
+    frost-button[size="small"] frost-icon {
+      height: 20px;
+      width: 20px; }

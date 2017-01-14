@@ -367,20 +367,14 @@
 	    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
 	  }
 
-	  function cloneProps(props) {
-	    var clone = {};
+	  var assign = Object.assign,
+	      keys = Object.keys;
 
-	    Object.keys(props).forEach(function (key) {
-	      clone[key] = props[key];
-	    });
-
-	    return clone;
-	  }
 
 	  function getNewState(incomingState, state) {
 	    var newState = {};
 
-	    Object.keys(state).forEach(function (key) {
+	    keys(state).forEach(function (key) {
 	      if (key in incomingState) {
 	        return;
 	      }
@@ -388,7 +382,7 @@
 	      newState[key] = state[key];
 	    });
 
-	    Object.keys(incomingState).forEach(function (key) {
+	    keys(incomingState).forEach(function (key) {
 	      newState[key] = incomingState[key];
 	    });
 
@@ -410,8 +404,16 @@
 	        value: function createdCallback() {
 	          var _this2 = this;
 
-	          this.props = _propTypes.getProps.call(this);
+	          this.props = _propTypes.getInitialProps.call(this);
 	          this.state = {};
+
+	          if (this.propTypes) {
+	            _propTypes.validatePropTypes.call(this);
+	          }
+
+	          if (this.getDefaultProps) {
+	            _propTypes.applyDefaults.call(this, this.getDefaultProps());
+	          }
 
 	          this.setState = function (incomingState) {
 	            var newState = getNewState(incomingState, _this2.state);
@@ -421,7 +423,7 @@
 	              _this2.componentWillUpdate(_this2.props, newState);
 	            }
 
-	            Object.assign(_this2.state, newState);
+	            assign(_this2.state, newState);
 
 	            if (typeof _this2.render === 'function') {
 	              _this2.render();
@@ -431,14 +433,6 @@
 	              _this2.componentDidUpdate(_this2.props, prevState);
 	            }
 	          };
-
-	          if (this.propTypes) {
-	            _propTypes.validatePropTypes.call(this);
-	          }
-
-	          if (this.getDefaultProps) {
-	            _propTypes.applyDefaults.call(this, this.getDefaultProps());
-	          }
 
 	          if (typeof this.componentWillMount === 'function') {
 	            this.componentWillMount();
@@ -458,7 +452,7 @@
 	      }, {
 	        key: 'attributeChangedCallback',
 	        value: function attributeChangedCallback(key, oldValue, newValue) {
-	          var newProps = cloneProps(this.props);
+	          var newProps = assign({}, this.props); // Create shallow clone of props
 	          var prevProps = this.props;
 
 	          newProps[key] = newValue;
@@ -509,8 +503,23 @@
 	    value: true
 	  });
 	  exports.applyDefaults = applyDefaults;
-	  exports.getProps = getProps;
+	  exports.getInitialProps = getInitialProps;
 	  exports.validatePropTypes = validatePropTypes;
+
+	  function _defineProperty(obj, key, value) {
+	    if (key in obj) {
+	      Object.defineProperty(obj, key, {
+	        value: value,
+	        enumerable: true,
+	        configurable: true,
+	        writable: true
+	      });
+	    } else {
+	      obj[key] = value;
+	    }
+
+	    return obj;
+	  }
 
 	  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
 	    return typeof obj;
@@ -518,30 +527,40 @@
 	    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
 	  };
 
+	  var assign = Object.assign,
+	      keys = Object.keys;
+
+
+	  /**
+	   * Apply default property values to unset properties
+	   * @param {Object} defaults - property defaults
+	   */
 	  function applyDefaults(defaults) {
 	    var _this = this;
 
-	    Object.keys(defaults).forEach(function (key) {
-	      if (_this.getAttribute(key) === null) {
-	        _this.setAttribute(key, defaults[key]);
+	    keys(defaults).forEach(function (key) {
+	      if (!_this.props[key]) {
+	        var value = defaults[key];
+	        _this.props[key] = value; // Make sure property is on props for life cycle hooks
+	        _this.setAttribute(key, value); // Make sure property is set in DOM for CSS selectors
 	      }
 	    });
 	  }
 
-	  function getProps() {
+	  /**
+	   * Get initial values of properties passed in by consumer
+	   * @returns {Object} initial property values
+	   */
+	  function getInitialProps() {
 	    var _this2 = this;
 
 	    if (_typeof(this.propTypes) !== 'object') {
 	      return {};
 	    }
 
-	    var props = {};
-
-	    Object.keys(this.propTypes).forEach(function (key) {
-	      props[key] = _this2.getAttribute(key);
-	    });
-
-	    return props;
+	    return keys(this.propTypes).reduce(function (props, key) {
+	      return assign(props, _defineProperty({}, key, _this2.getAttribute(key)));
+	    }, {});
 	  }
 
 	  function isValuePresent(_ref) {
@@ -563,7 +582,7 @@
 	  function validatePropTypes() {
 	    var _this3 = this;
 
-	    Object.keys(this.propTypes).forEach(function (key) {
+	    keys(this.propTypes).forEach(function (key) {
 	      var validator = _this3.propTypes[key];
 
 	      if (typeof validator !== 'function') {
@@ -837,14 +856,7 @@
 	        var example = _prismjs2.default.highlight(this.state.example, _prismjs2.default.languages.html);
 	        var lang = 'language-html';
 
-	        return '\n      <h4>' + this.props.title + '</h4>\n      ' + this.state.example + '\n      <h5>Source Code</h5>\n      <pre class="' + lang + '"><code class="' + lang + '">' + example + '</code></pre>\n    ';
-	      }
-	    }, {
-	      key: 'propTypes',
-	      get: function get() {
-	        return {
-	          title: _react.PropTypes.string({ required: true })
-	        };
+	        return '\n      <h4>Example</h4>\n      ' + this.state.example + '\n      <pre class="' + lang + '"><code class="' + lang + '">' + example + '</code></pre>\n    ';
 	      }
 	    }]);
 
