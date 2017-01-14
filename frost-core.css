@@ -64,3 +64,13 @@ frost-button {
     frost-button[size="small"] frost-icon {
       height: 20px;
       width: 20px; }
+
+frost-code-example code[class*="language-"] *, frost-code-example pre[class*="language-"] * {
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace; }
+
+frost-code-examples header {
+  font-size: 120%;
+  font-weight: 600; }
+
+* {
+  font-family: Roboto, Arial, sans-serif; }
