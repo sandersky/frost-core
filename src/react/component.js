@@ -53,7 +53,10 @@ export function createComponent (superclass) {
         }
 
         if (typeof this.componentDidUpdate === 'function') {
-          this.componentDidUpdate(this.props, prevState)
+          setTimeout(
+            this.componentDidUpdate.bind(this, this.props, prevState),
+            0
+          )
         }
       }
 
@@ -84,7 +87,10 @@ export function createComponent (superclass) {
       }
 
       if (typeof this.componentDidUpdate === 'function') {
-        this.componentDidUpdate(prevProps, this.state)
+        setTimeout(
+          this.componentDidUpdate.bind(this, prevProps, this.state),
+          0
+        )
       }
     }
 

@@ -16,6 +16,8 @@ import FrostText from './components/frost-text'
 import FrostTextarea from './components/frost-textarea'
 import FrostToggle from './components/frost-toggle'
 
+export * as utils from './utils'
+
 const componentMapping = {
   'frost-button': FrostButton,
   'frost-checkbox': FrostCheckbox,

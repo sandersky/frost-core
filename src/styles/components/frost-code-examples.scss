@@ -1,6 +1,20 @@
 frost-code-examples {
+  display: flex;
+
+  > * {
+    margin: 0 10px;
+  }
+
   header {
     font-size: 120%;
     font-weight: 600;
+  }
+
+  [data-name="examples"] {
+    flex: 1 0 auto;
+  }
+
+  [data-name="scroll-spy"] {
+    flex: 0 1 auto;
   }
 }
