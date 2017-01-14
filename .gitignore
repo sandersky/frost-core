@@ -5,8 +5,11 @@
 /node_modules
 
 # Compiled source
+/.gh-pages-demo
 /coverage
 /demo/*.css
 /demo/*.js
 /dist
-/.gh-pages-demo
+/frost-core.*
+/index.html
+/prism-theme.css
