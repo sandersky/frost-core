@@ -1,39 +1,60 @@
 // General
-$frost-button-background-color: transparent !default;
+$frost-button-active-outline: none !default;
+$frost-button-background: transparent !default;
 $frost-button-border: 0 !default;
 $frost-button-border-radius: 2px !default;
 $frost-button-color: $frost-color-white !default;
+$frost-button-focus-box-shadow: 0 1px 6px transparentize($frost-color-blue-1, .25) !default;
+$frost-button-focus-outline: none !default;
 $frost-button-font-family: $frost-font-family !default;
 $frost-button-padding: 0 !default;
 
 // Primary priority
+$frost-button-primary-active-background: #1e9de5 !default;
+$frost-button-primary-active-color: $frost-color-blue-4 !default;
 $frost-button-primary-background: linear-gradient(lighten($frost-color-blue-1, 14), $frost-color-blue-1) !default;
 $frost-button-primary-color: $frost-color-white !default;
+$frost-button-primary-focus-border: solid 2px $frost-color-blue-4 !default;
+$frost-button-primary-hover-background: $frost-color-blue-3 !default;
 
-$frost-button-secondary-background-color: $frost-color-white !default;
+$frost-button-secondary-active-background: #e7eef3 !default;
+$frost-button-secondary-active-color: $frost-color-blue-3 !default;
+$frost-button-secondary-background: $frost-color-white !default;
 $frost-button-secondary-border: 2px solid $frost-color-blue-1 !default;
 $frost-button-secondary-color: $frost-color-blue-1 !default;
+$frost-button-secondary-hover-background: transparentize($frost-color-blue-1, .9) !default;
 
-$frost-button-tertiary-background-color: inherit !default;
+$frost-button-tertiary-active-background: #e7eef3 !default;
+$frost-button-tertiary-active-color: $frost-color-blue-3 !default;
+$frost-button-tertiary-background: inherit !default;
 $frost-button-tertiary-color: $frost-color-blue-1 !default;
+$frost-button-tertiary-focus-box-shadow: 1px solid $frost-color-blue-4 !default;
+$frost-button-tertiary-focus-outline: none !default;
+$frost-button-tertiary-hover-background: rgba($frost-color-blue-1, .05) !default;
 
 // Large size
 $frost-button-large-font-size: $frost-font-l !default;
 $frost-button-large-height: 50px !default;
+$frost-button-large-icon-height: 35px !default;
+$frost-button-large-icon-width: 35px !default;
 $frost-button-large-padding: 0 20px !default;
 
 // Medium size
 $frost-button-medium-font-size: $frost-font-m !default;
 $frost-button-medium-height: 40px !default;
+$frost-button-medium-icon-height: 30px !default;
+$frost-button-medium-icon-width: 30px !default;
 $frost-button-medium-padding: 0 20px !default;
 
 // Small size
 $frost-button-small-font-size: $frost-font-s !default;
 $frost-button-small-height: 30px !default;
+$frost-button-small-icon-height: 20px !default;
+$frost-button-small-icon-width: 20px !default;
 $frost-button-small-padding: 0 10px !default;
 
 frost-button {
-  background-color: $frost-button-background-color;
+  background: $frost-button-background;
   border: $frost-button-border;
   border-radius: $frost-button-border-radius;
   color: $frost-button-color;
@@ -41,37 +62,107 @@ frost-button {
   font-family: $frost-button-font-family;
   padding: $frost-button-padding;
 
+  &:active {
+    outline: $frost-button-active-outline;
+  }
+
+  &:focus {
+    box-shadow: $frost-button-focus-box-shadow;
+    outline: $frost-button-focus-outline;
+  }
+
+  // Priorities
+
   &[priority="primary"] {
     background: $frost-button-primary-background;
     color: $frost-button-primary-color;
+
+    &:not(:disabled) {
+      &:active {
+        background: $frost-button-primary-active-background;
+        color: $frost-button-primary-active-color;
+      }
+
+      &:focus {
+        border: $frost-button-primary-focus-border;
+      }
+
+      &:hover {
+        background: $frost-button-primary-hover-background;
+      }
+    }
   }
 
   &[priority="secondary"] {
-    background-color: $frost-button-secondary-background-color;
+    background: $frost-button-secondary-background;
     border: $frost-button-secondary-border;
     color: $frost-button-secondary-color;
+
+    &:not(:disabled) {
+      &:active {
+        background: $frost-button-secondary-active-background;
+        color: $frost-button-secondary-active-color;
+      }
+
+      &:hover {
+        background: $frost-button-secondary-hover-background;
+      }
+    }
   }
 
   &[priority="tertiary"] {
-    background-color: $frost-button-tertiary-background-color;
+    background: $frost-button-tertiary-background;
     color: $frost-button-tertiary-color;
+
+    &:not(:disabled) {
+      &:active {
+        background: $frost-button-tertiary-active-background;
+        color: $frost-button-tertiary-active-color;
+      }
+
+      &:focus {
+        box-shadow: $frost-button-tertiary-focus-box-shadow;
+        outline: $frost-button-tertiary-focus-outline;
+      }
+
+      &:hover {
+        background: $frost-button-tertiary-hover-background;
+      }
+    }
   }
+
+  // Sizes
 
   &[size="large"] {
     font-size: $frost-button-large-font-size;
     height: $frost-button-large-height;
     padding: $frost-button-large-padding;
+
+    frost-icon {
+      height: $frost-button-large-icon-height;
+      width: $frost-button-large-icon-width;
+    }
   }
 
   &[size="medium"] {
     font-size: $frost-button-medium-font-size;
     height: $frost-button-medium-height;
     padding: $frost-button-medium-padding;
+
+    frost-icon {
+      height: $frost-button-medium-icon-height;
+      width: $frost-button-medium-icon-width;
+    }
   }
 
   &[size="small"] {
     font-size: $frost-button-small-font-size;
     height: $frost-button-small-height;
     padding: $frost-button-small-padding;
+
+    frost-icon {
+      height: $frost-button-small-icon-height;
+      width: $frost-button-small-icon-width;
+    }
   }
 }
