@@ -2,22 +2,61 @@ import {isCharWhitespace} from '../utils/string'
 
 const {isArray} = Array
 
-function getTemplateSegments (tokens, variables) {
-  if (!isArray(tokens)) {
-    throw new Error('t() should be called with a template string')
+/**
+ * Insert processed substitution expressions into string literals from template
+ * literal to have a single array of all pieces in the order they occur in the
+ * template literal.
+ * @param {Array<String>} strings - string literals from template literal
+ * @param {Array<Any>} values - processed substitution expressions
+ * @returns {Array<Any>} string literals with substitutions inserted
+ */
+function flattenTemplateLiteralArguments (strings, values) {
+  if (!isArray(strings)) {
+    throw new Error('t() should be called with a template literal')
   }
 
-  const segments = Array.from(tokens)
+  const stringsWithValuesInserted = Array.from(strings)
 
-  for (let i = variables.length - 1; i !== -1; i--) {
-    segments.splice(i + 1, 0, variables[i])
+  for (let i = values.length - 1; i !== -1; i--) {
+    stringsWithValuesInserted.splice(i + 1, 0, values[i])
   }
 
-  return segments
+  return stringsWithValuesInserted
 }
 
-function parseNode ({allowSiblings, currentToken, start, tokens}) {
-  const node = {
+/**
+ * Jump to the first non-whitespace character when evaluating the string
+ * literals and processed substitution evaluations of a template literal.
+ * @param {Array<Any>} tokens - string literals with substitutions inserted
+ * @returns {Object} token and index for first non-whitespace character
+ */
+function jumpToFirstNonWhitespaceChar (tokens) {
+  let currentToken = tokens.splice(0, 1)[0]
+  let start = 0
+
+  while (currentToken.length > start && isCharWhitespace(currentToken[start])) {
+    start += 1
+
+    if (start === currentToken.length) {
+      currentToken = tokens.splice(0, 1)[0]
+
+      if (typeof currentToken !== 'string') {
+        throw new Error(
+          "Template literal shouldn't have a substitution that evaluates to a" +
+          "type other than string before it's first opening element tag"
+        )
+      }
+    }
+  }
+
+  return {
+    currentToken,
+    start
+  }
+}
+
+function parseElement ({allowSiblings, currentToken, start, tokens}) {
+  const element = {
     tag: ''
   }
 
@@ -27,13 +66,13 @@ function parseNode ({allowSiblings, currentToken, start, tokens}) {
     currentToken[start] !== '>' &&
     currentToken[start] !== '/'
   ) {
-    node.tag += currentToken[start]
+    element.tag += currentToken[start]
     start += 1
   }
 
   if (currentToken[start] === '/') {
     if (currentToken[start + 1] !== '>') {
-      throw new Error(`Missing > on closing tag "${node.tag}"`)
+      throw new Error(`Missing > on closing tag "${element.tag}"`)
     }
 
     // TODO: decide what to do next based on allowSiblings option
@@ -42,7 +81,30 @@ function parseNode ({allowSiblings, currentToken, start, tokens}) {
   // TODO: decide what to do next
 }
 
-function validateTemplateStringTokens (tokens) {
+/**
+ * Validate that first non-whitespace character is a "<" as we expect a template
+ * to begin with an element.
+ * @param {String} currentToken - first token that isn't all whitespace
+ * @param {Number} start - index of 1st non-whitespace character in currentToken
+ */
+function validateFirstNonWhitespaceChar (currentToken, start) {
+  if (currentToken === undefined) {
+    throw new Error('Template literal must contain a root element')
+  }
+
+  if (currentToken[start] !== '<') {
+    throw new Error(
+      'Template literal should begin with an element (leading whitespace is ' +
+      'allowed)'
+    )
+  }
+}
+
+/**
+ * Validate tokens from flattened template literal arguments.
+ * @param {Array<Any>} tokens - string literals with substitutions inserted
+ */
+function validateFlattenedTemplateLiteralArguments (tokens) {
   if (tokens.length === 0) {
     throw new Error('Call to t() should pass at least one token')
   }
@@ -52,31 +114,20 @@ function validateTemplateStringTokens (tokens) {
   }
 }
 
-export default function (tokens, ...variables) {
-  tokens = getTemplateSegments(tokens, variables)
+/**
+ * Process template literal into a virtual DOM
+ * @param {Array<String>} strings - string literals from template literal
+ * @param {Array<Any>} values - processed substitution expressions
+ * @returns {Object} virtual DOM representation of template literal
+ */
+export default function (strings, ...values) {
+  const tokens = flattenTemplateLiteralArguments(strings, values)
+  validateFlattenedTemplateLiteralArguments(tokens)
 
-  validateTemplateStringTokens(tokens)
+  const {currentToken, start} = jumpToFirstNonWhitespaceChar(tokens)
+  validateFirstNonWhitespaceChar(currentToken, start)
 
-  let currentToken = tokens.splice(0, 1)[0]
-  let start = 0
-
-  while (currentToken.length > start && isCharWhitespace(currentToken[start])) {
-    start += 1
-
-    if (start === currentToken.length) {
-      currentToken = tokens.splice(0, 1)[0]
-    }
-  }
-
-  if (currentToken === undefined) {
-    throw new Error('Template string must contain a root node')
-  }
-
-  if (currentToken[start] !== '<') {
-    throw new Error('Template should start with a node')
-  }
-
-  return parseNode({
+  return parseElement({
     allowSiblings: false,
     currentToken,
     start: start + 1,
