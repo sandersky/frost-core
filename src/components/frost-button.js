@@ -1,19 +1,23 @@
+import propTypesMixin, {PropTypes} from '../mixins/prop-types'
+
 export const priorities = [
   'large',
   'medium',
   'small'
 ]
 
-export default class FrostButton extends HTMLButtonElement {
-  createdCallback () {
-    const priority = this.getAttribute('priority')
+class FrostButtonBase extends HTMLButtonElement {
+  get propTypes () {
+    return {
+      priority: PropTypes.oneOf(priorities)
+    }
+  }
 
-    if (!priority) {
-      this.setAttribute('priority', 'medium')
-    } else if (priorities.indexOf(priority) === -1) {
-      throw new Error(
-        `Invalid priority "${priority}" for frost-button. Expected one of: ${priorities.join(', ')}`
-      )
+  getDefaultProps () {
+    return {
+      priority: 'medium'
     }
   }
 }
+
+export default class FrostButton extends propTypesMixin(FrostButtonBase) {}
