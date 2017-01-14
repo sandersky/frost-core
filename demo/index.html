@@ -6,9 +6,58 @@
   <body>
     <h1>frost-core</h1>
     <h2>frost-button</h2>
+    <strong>with defaults</strong>
+    <br/>
     <frost-button>Click Me!</frost-button>
-    <frost-button priority="large">Click Me!</frost-button>
-    <frost-button priority="medium">Click Me!</frost-button>
-    <frost-button priority="small">Click Me!</frost-button>
+    <br/>
+    <strong>with attributes</strong>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>primary</th>
+          <th>secondary</th>
+          <th>tertiary</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>large</th>
+          <td>
+            <frost-button priority="primary" size="large">Click Me!</frost-button>
+          </td>
+          <td>
+            <frost-button priority="secondary" size="large">Click Me!</frost-button>
+          </td>
+          <td>
+            <frost-button priority="tertiary" size="large">Click Me!</frost-button>
+          </td>
+        </tr>
+        <tr>
+          <th>medium</th>
+          <td>
+            <frost-button priority="primary" size="medium">Click Me!</frost-button>
+          </td>
+          <td>
+            <frost-button priority="secondary" size="medium">Click Me!</frost-button>
+          </td>
+          <td>
+            <frost-button priority="tertiary" size="medium">Click Me!</frost-button>
+          </td>
+        </tr>
+        <tr>
+          <th>small</th>
+          <td>
+            <frost-button priority="primary" size="small">Click Me!</frost-button>
+          </td>
+          <td>
+            <frost-button priority="secondary" size="small">Click Me!</frost-button>
+          </td>
+          <td>
+            <frost-button priority="tertiary" size="small">Click Me!</frost-button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>

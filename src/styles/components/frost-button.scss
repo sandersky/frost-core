@@ -6,17 +6,28 @@ $frost-button-color: $frost-color-white !default;
 $frost-button-font-family: $frost-font-family !default;
 $frost-button-padding: 0 !default;
 
-// Large priority
+// Primary priority
+$frost-button-primary-background: linear-gradient(lighten($frost-color-blue-1, 14), $frost-color-blue-1) !default;
+$frost-button-primary-color: $frost-color-white !default;
+
+$frost-button-secondary-background-color: $frost-color-white !default;
+$frost-button-secondary-border: 2px solid $frost-color-blue-1 !default;
+$frost-button-secondary-color: $frost-color-blue-1 !default;
+
+$frost-button-tertiary-background-color: inherit !default;
+$frost-button-tertiary-color: $frost-color-blue-1 !default;
+
+// Large size
 $frost-button-large-font-size: $frost-font-l !default;
 $frost-button-large-height: 50px !default;
 $frost-button-large-padding: 0 20px !default;
 
-// Medium priority
+// Medium size
 $frost-button-medium-font-size: $frost-font-m !default;
 $frost-button-medium-height: 40px !default;
 $frost-button-medium-padding: 0 20px !default;
 
-// Small priority
+// Small size
 $frost-button-small-font-size: $frost-font-s !default;
 $frost-button-small-height: 30px !default;
 $frost-button-small-padding: 0 10px !default;
@@ -30,19 +41,35 @@ frost-button {
   font-family: $frost-button-font-family;
   padding: $frost-button-padding;
 
-  &[priority="large"] {
+  &[priority="primary"] {
+    background: $frost-button-primary-background;
+    color: $frost-button-primary-color;
+  }
+
+  &[priority="secondary"] {
+    background-color: $frost-button-secondary-background-color;
+    border: $frost-button-secondary-border;
+    color: $frost-button-secondary-color;
+  }
+
+  &[priority="tertiary"] {
+    background-color: $frost-button-tertiary-background-color;
+    color: $frost-button-tertiary-color;
+  }
+
+  &[size="large"] {
     font-size: $frost-button-large-font-size;
     height: $frost-button-large-height;
     padding: $frost-button-large-padding;
   }
 
-  &[priority="medium"] {
+  &[size="medium"] {
     font-size: $frost-button-medium-font-size;
     height: $frost-button-medium-height;
     padding: $frost-button-medium-padding;
   }
 
-  &[priority="small"] {
+  &[size="small"] {
     font-size: $frost-button-small-font-size;
     height: $frost-button-small-height;
     padding: $frost-button-small-padding;

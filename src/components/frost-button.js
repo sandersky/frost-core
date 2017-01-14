@@ -1,6 +1,12 @@
 import propTypesMixin, {PropTypes} from '../mixins/prop-types'
 
 export const priorities = [
+  'primary',
+  'secondary',
+  'tertiary'
+]
+
+export const sizes = [
   'large',
   'medium',
   'small'
@@ -9,13 +15,15 @@ export const priorities = [
 class FrostButtonBase extends HTMLButtonElement {
   get propTypes () {
     return {
-      priority: PropTypes.oneOf(priorities)
+      priority: PropTypes.oneOf(priorities),
+      size: PropTypes.oneOf(sizes)
     }
   }
 
   getDefaultProps () {
     return {
-      priority: 'medium'
+      priority: 'tertiary',
+      size: 'medium'
     }
   }
 }
