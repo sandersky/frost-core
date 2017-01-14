@@ -1,12 +1,6 @@
-import {PropTypes, createComponent} from '../react'
+import Prism from 'prismjs'
 
-const htmlCharReplacements = {
-  '&': '&amp;',
-  '<': '&lt;',
-  '>': '&gt;',
-  '"': '&quot;',
-  "'": '&#039;'
-}
+import {PropTypes, createComponent} from '../react'
 
 class FrostCodeExampleBase extends HTMLDivElement {
   get propTypes () {
@@ -16,25 +10,32 @@ class FrostCodeExampleBase extends HTMLDivElement {
   }
 
   componentWillMount () {
+    const lines = this.innerHTML.split('\n')
+
+    const trimCount = lines
+      .map((line) => line.match(/(\s+)[^\s]/))
+      .filter((matches) => matches !== null)
+      .map((matches) => matches[1])
+      .map((leadingWhitespace) => leadingWhitespace.length)
+      .reduce((a, b) => Math.min(a, b), Infinity)
+
+    const trimmedLines = lines
+      .map((line) => line.substring(trimCount))
+
     this.setState({
-      example: this.innerHTML
+      example: trimmedLines.join('\n').trim()
     })
   }
 
-  getEscapedHtml (unsafe) {
-      return unsafe
-        .split('')
-        .map((char) => htmlCharReplacements[char] || char)
-        .join('')
-   }
-
   render () {
-    const escapedExample = this.getEscapedHtml(this.state.example)
+    const example = Prism.highlight(this.state.example, Prism.languages.html)
+    const lang = 'language-html'
 
     return `
-      <strong>${this.props.title}</string>
+      <h4>${this.props.title}</h4>
       ${this.state.example}
-      <pre>${escapedExample}</pre>
+      <h5>Source Code</h5>
+      <pre class="${lang}"><code class="${lang}">${example}</code></pre>
     `
   }
 }

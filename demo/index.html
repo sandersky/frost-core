@@ -1,63 +1,56 @@
 <html>
   <head>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="prism-theme.css" rel="stylesheet" />
     <link href="frost-core.css" rel="stylesheet" />
     <script src="frost-core.js"></script>
   </head>
   <body>
     <h1>frost-core</h1>
     <h2>frost-button</h2>
-    <frost-code-example title="with defaults">
-      <frost-button>Press me</frost-button>
-    </frost-code-example>
-    <strong>with attributes</strong>
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th>primary</th>
-          <th>secondary</th>
-          <th>tertiary</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>large</th>
-          <td>
-            <frost-button priority="primary" size="large">Press me</frost-button>
-          </td>
-          <td>
-            <frost-button priority="secondary" size="large">Press me</frost-button>
-          </td>
-          <td>
-            <frost-button priority="tertiary" size="large">Press me</frost-button>
-          </td>
-        </tr>
-        <tr>
-          <th>medium</th>
-          <td>
-            <frost-button priority="primary" size="medium">Press me</frost-button>
-          </td>
-          <td>
-            <frost-button priority="secondary" size="medium">Press me</frost-button>
-          </td>
-          <td>
-            <frost-button priority="tertiary" size="medium">Press me</frost-button>
-          </td>
-        </tr>
-        <tr>
-          <th>small</th>
-          <td>
-            <frost-button priority="primary" size="small">Press me</frost-button>
-          </td>
-          <td>
-            <frost-button priority="secondary" size="small">Press me</frost-button>
-          </td>
-          <td>
-            <frost-button priority="tertiary" size="small">Press me</frost-button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <frost-code-examples>
+      <section>
+        <header>Defaults</header>
+        <frost-code-example title="defaults">
+          <frost-button>Press me</frost-button>
+        </frost-code-example>
+      </section>
+      <section>
+        <header>Priority</header>
+        <frost-code-example title="primary">
+          <frost-button priority="primary">
+            Press me
+          </frost-button>
+        </frost-code-example>
+        <frost-code-example title="secondary (default)">
+          <frost-button priority="secondary">
+            Press me
+          </frost-button>
+        </frost-code-example>
+        <frost-code-example title="tertiary">
+          <frost-button priority="tertiary">
+            Press me
+          </frost-button>
+        </frost-code-example>
+      </section>
+      <section>
+        <header>Size</header>
+        <frost-code-example title="large">
+          <frost-button size="large">
+            Press me
+          </frost-button>
+        </frost-code-example>
+        <frost-code-example title="medium (default)">
+          <frost-button size="medium">
+            Press me
+          </frost-button>
+        </frost-code-example>
+        <frost-code-example title="small">
+          <frost-button size="small">
+            Press me
+          </frost-button>
+        </frost-code-example>
+      </section>
+    </frost-code-examples>
   </body>
 </html>

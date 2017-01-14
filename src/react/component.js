@@ -4,6 +4,16 @@ import {
   validatePropTypes
 } from './prop-types'
 
+function cloneProps (props) {
+  const clone = {}
+
+  Object.keys(props).forEach((key) => {
+    clone[key] = props[key]
+  })
+
+  return clone
+}
+
 function getNewState (incomingState, state) {
   const newState = {}
 
@@ -30,15 +40,20 @@ export function createComponent (superclass) {
 
       this.setState = (incomingState) => {
         const newState = getNewState(incomingState, this.state)
+        const prevState = this.state
 
         if (typeof this.componentWillUpdate === 'function') {
-          this.componentWillUpdate(newState)
+          this.componentWillUpdate(this.props, newState)
         }
 
         Object.assign(this.state, newState)
 
         if (typeof this.render === 'function') {
           this.render()
+        }
+
+        if (typeof this.componentDidUpdate === 'function') {
+          this.componentDidUpdate(this.props, prevState)
         }
       }
 
@@ -66,10 +81,18 @@ export function createComponent (superclass) {
     }
 
     attributeChangedCallback (key, oldValue, newValue) {
-      this.props[key] = newValue
+      const newProps = cloneProps(this.props)
+      const prevProps = this.props
+
+      newProps[key] = newValue
+      this.props = newProps
 
       if (typeof this.render === 'function') {
         this.render()
+      }
+
+      if (typeof this.componentDidUpdate === 'function') {
+        this.componentDidUpdate(prevProps, this.state)
       }
     }
 

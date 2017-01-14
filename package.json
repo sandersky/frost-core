@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "webpack && node-sass src/styles/frost-core.scss > dist/frost-core.css",
-    "start": "npm run build && cp dist/* demo/ && open demo/index.html",
+    "start": "bash ./scripts/build-demo.sh",
     "test": "karma start"
   },
   "repository": "git@github.com:ciena-frost/frost-core.git",
@@ -42,6 +42,7 @@
     "mocha": "^3.2.0",
     "node-sass": "^4.3.0",
     "npm": "^4.1.1",
+    "prismjs": "^1.6.0",
     "webpack": "^1.14.0"
   }
 }
