@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "webpack && node-sass src/styles/frost-core.scss > dist/frost-core.css",
+    "publish-gh-pages": "bash ./scripts/publish-gh-pages.sh",
     "start": "bash ./scripts/build-demo.sh",
     "test": "karma start"
   },
