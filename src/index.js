@@ -1,5 +1,6 @@
 import FrostButton from './components/frost-button'
 import FrostCheckbox from './components/frost-checkbox'
+import FrostCodeExample from './components/frost-code-example'
 import FrostIcon from './components/frost-icon'
 import FrostLink from './components/frost-link'
 import FrostPassword from './components/frost-password'
@@ -14,6 +15,7 @@ import FrostToggle from './components/frost-toggle'
 const componentMapping = {
   'frost-button': FrostButton,
   'frost-checkbox': FrostCheckbox,
+  'frost-code-example': FrostCodeExample,
   'frost-icon': FrostIcon,
   'frost-link': FrostLink,
   'frost-password': FrostPassword,
@@ -36,6 +38,7 @@ Object.keys(componentMapping)
 export {
   FrostButton,
   FrostCheckbox,
+  FrostCodeExample,
   FrostIcon,
   FrostLink,
   FrostPassword,

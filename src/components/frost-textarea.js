@@ -1,4 +1,4 @@
-import propTypesMixin from '../mixins/prop-types'
+import reactComponent from '../mixins/react-component'
 
 class FrostTextareaBase extends HTMLInputElement {
   getDefaultProps () {
@@ -7,4 +7,4 @@ class FrostTextareaBase extends HTMLInputElement {
   }
 }
 
-export default class FrostTextarea extends propTypesMixin(FrostTextareaBase) {}
+export default class FrostTextarea extends reactComponent(FrostTextareaBase) {}

@@ -1,4 +1,4 @@
-import propTypesMixin from '../mixins/prop-types'
+import reactComponent from '../mixins/react-component'
 
 class FrostSelectBase extends HTMLSelectElement {
   getDefaultProps () {
@@ -7,4 +7,4 @@ class FrostSelectBase extends HTMLSelectElement {
   }
 }
 
-export default class FrostSelect extends propTypesMixin(FrostSelectBase) {}
+export default class FrostSelect extends reactComponent(FrostSelectBase) {}

@@ -1,4 +1,4 @@
-import propTypesMixin, {PropTypes} from '../mixins/prop-types'
+import reactComponent, {PropTypes} from '../mixins/react-component'
 
 export const priorities = [
   'primary',
@@ -28,4 +28,4 @@ class FrostButtonBase extends HTMLButtonElement {
   }
 }
 
-export default class FrostButton extends propTypesMixin(FrostButtonBase) {}
+export default class FrostButton extends reactComponent(FrostButtonBase) {}

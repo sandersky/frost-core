@@ -1,4 +1,4 @@
-import propTypesMixin from '../mixins/prop-types'
+import reactComponent from '../mixins/react-component'
 
 class FrostIconBase extends HTMLElement {
   getDefaultProps () {
@@ -7,4 +7,4 @@ class FrostIconBase extends HTMLElement {
   }
 }
 
-export default class FrostIcon extends propTypesMixin(FrostIconBase) {}
+export default class FrostIcon extends reactComponent(FrostIconBase) {}

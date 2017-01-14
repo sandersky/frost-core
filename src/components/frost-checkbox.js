@@ -1,4 +1,4 @@
-import propTypesMixin from '../mixins/prop-types'
+import reactComponent from '../mixins/react-component'
 
 class FrostCheckboxBase extends HTMLInputElement {
   getDefaultProps () {
@@ -7,4 +7,4 @@ class FrostCheckboxBase extends HTMLInputElement {
   }
 }
 
-export default class FrostCheckbox extends propTypesMixin(FrostCheckboxBase) {}
+export default class FrostCheckbox extends reactComponent(FrostCheckboxBase) {}

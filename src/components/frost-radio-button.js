@@ -1,4 +1,4 @@
-import propTypesMixin from '../mixins/prop-types'
+import reactComponent from '../mixins/react-component'
 
 class FrostRadioButtonBase extends HTMLInputElement {
   getDefaultProps () {
@@ -7,4 +7,4 @@ class FrostRadioButtonBase extends HTMLInputElement {
   }
 }
 
-export default class FrostRadioButton extends propTypesMixin(FrostRadioButtonBase) {}
+export default class FrostRadioButton extends reactComponent(FrostRadioButtonBase) {}

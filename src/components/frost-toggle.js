@@ -1,4 +1,4 @@
-import propTypesMixin from '../mixins/prop-types'
+import reactComponent from '../mixins/react-component'
 
 class FrostToggleBase extends HTMLInputElement {
   getDefaultProps () {
@@ -7,4 +7,4 @@ class FrostToggleBase extends HTMLInputElement {
   }
 }
 
-export default class FrostToggle extends propTypesMixin(FrostToggleBase) {}
+export default class FrostToggle extends reactComponent(FrostToggleBase) {}

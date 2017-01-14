@@ -1,4 +1,4 @@
-import propTypesMixin from '../mixins/prop-types'
+import reactComponent from '../mixins/react-component'
 
 class FrostLinkBase extends HTMLAnchorElement {
   getDefaultProps () {
@@ -7,4 +7,4 @@ class FrostLinkBase extends HTMLAnchorElement {
   }
 }
 
-export default class FrostLink extends propTypesMixin(FrostLinkBase) {}
+export default class FrostLink extends reactComponent(FrostLinkBase) {}
