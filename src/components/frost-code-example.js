@@ -1,6 +1,6 @@
 import Prism from 'prismjs'
 
-import {createComponent, t} from '../react'
+import {createComponent, t} from '../dogma'
 import {trimSuperfluousLeadingWhitespace} from '../utils/string'
 
 class FrostCodeExampleBase extends HTMLDivElement {

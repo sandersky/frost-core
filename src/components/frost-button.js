@@ -1,4 +1,4 @@
-import {PropTypes, createComponent} from '../react'
+import {PropTypes, createComponent} from '../dogma'
 
 export const priorities = [
   'primary',

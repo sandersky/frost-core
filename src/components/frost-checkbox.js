@@ -1,4 +1,4 @@
-import {createComponent} from '../react'
+import {createComponent} from '../dogma'
 
 class FrostCheckboxBase extends HTMLInputElement {
   get propTypes () {

@@ -1,4 +1,4 @@
-import {createComponent} from '../react'
+import {createComponent} from '../dogma'
 
 class FrostLinkBase extends HTMLAnchorElement {
   get propTypes () {
