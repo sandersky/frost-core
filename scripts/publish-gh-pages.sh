@@ -4,7 +4,8 @@ VERSION=`node -e "console.log(require('./package.json').version)"`
 TMP_GH_PAGES_DIR=.gh-pages-demo
 
 npm run build-demo
-cp -r . ${TMP_GH_PAGES_DIR}
+rm -rf ${TMP_GH_PAGES_DIR}
+mkdir ${TMP_GH_PAGES_DIR}
 cd ${TMP_GH_PAGES_DIR}
 git checkout gh-pages
 git rm -rf *
