@@ -41,6 +41,7 @@ export {
   FrostButton,
   FrostCheckbox,
   FrostCodeExample,
+  FrostCodeExamples,
   FrostIcon,
   FrostLink,
   FrostPassword,

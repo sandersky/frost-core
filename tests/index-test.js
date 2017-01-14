@@ -2,6 +2,7 @@ import {
   FrostButton,
   FrostCheckbox,
   FrostCodeExample,
+  FrostCodeExamples,
   FrostIcon,
   FrostLink,
   FrostPassword,
@@ -17,6 +18,7 @@ import {
 import FrostButtonComponent from '../src/components/frost-button'
 import FrostCheckboxComponent from '../src/components/frost-checkbox'
 import FrostCodeExampleComponent from '../src/components/frost-code-example'
+import FrostCodeExamplesComponent from '../src/components/frost-code-examples'
 import FrostIconComponent from '../src/components/frost-icon'
 import FrostLinkComponent from '../src/components/frost-link'
 import FrostPasswordComponent from '../src/components/frost-password'
@@ -39,6 +41,10 @@ describe('frost-core', function () {
 
   it('exports FrostCodeExample', function () {
     expect(FrostCodeExample).to.equal(FrostCodeExampleComponent)
+  })
+
+  it('exports FrostCodeExamples', function () {
+    expect(FrostCodeExamples).to.equal(FrostCodeExamplesComponent)
   })
 
   it('exports FrostIcon', function () {
