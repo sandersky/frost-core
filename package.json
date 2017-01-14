@@ -12,7 +12,7 @@
     "publish-gh-pages": "bash ./scripts/publish-gh-pages.sh",
     "test": "karma start"
   },
-  "repository": "git@github.com:ciena-frost/frost-core.git",
+  "repository": "git@github.com:sandersky/frost-core.git",
   "engines": {
     "node": ">= 6.0.0"
   },
@@ -22,9 +22,9 @@
   "author": "Matthew Dahl (https://github.com/sandersky)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ciena-frost/frost-core/issues"
+    "url": "https://github.com/sandersky/frost-core/issues"
   },
-  "homepage": "https://ciena-frost.github.io/frost-core",
+  "homepage": "https://sandersky.github.io/frost-core",
   "devDependencies": {
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
@@ -34,7 +34,6 @@
     "babel-preset-es2015": "^6.18.0",
     "chai": "^3.5.0",
     "document-register-element": "^1.3.0",
-    "install": "^0.8.4",
     "karma": "^1.3.0",
     "karma-babel-preprocessor": "^6.0.1",
     "karma-chai": "^0.1.0",
@@ -43,7 +42,6 @@
     "karma-mocha": "^1.3.0",
     "mocha": "^3.2.0",
     "node-sass": "^4.3.0",
-    "npm": "^4.1.1",
     "prismjs": "^1.6.0",
     "webpack": "^1.14.0"
   }
