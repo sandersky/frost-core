@@ -1,3 +1,9 @@
+export const WHITESPACE_CHARS = [' ', '\n', '\t']
+
+export function isCharWhitespace (char) {
+  return WHITESPACE_CHARS.indexOf(char) !== -1
+}
+
 /**
  * Trim superfluous leading whitespace from text so all content is shifted to
  * left edge when renderered in a <pre> tag. Essentially the same thing as

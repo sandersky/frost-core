@@ -1,7 +1,7 @@
 import Prism from 'prismjs'
 
-import {createComponent} from '../react'
-import {trimSuperfluousLeadingWhitespace} from '../utils/text'
+import {createComponent, t} from '../react'
+import {trimSuperfluousLeadingWhitespace} from '../utils/string'
 
 class FrostCodeExampleBase extends HTMLDivElement {
   componentWillMount () {
@@ -14,10 +14,12 @@ class FrostCodeExampleBase extends HTMLDivElement {
     const example = Prism.highlight(this.state.example, Prism.languages.html)
     const lang = 'language-html'
 
-    return `
-      <h4>Example</h4>
-      ${this.state.example}
-      <pre class="${lang}"><code class="${lang}">${example}</code></pre>
+    return t`
+      <div>
+        <h4>Example</h4>
+        ${this.state.example}
+        <pre class="${lang}"><code class="${lang}">${example}</code></pre>
+      </div>
     `
   }
 }

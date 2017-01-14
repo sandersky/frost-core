@@ -1,3 +1,5 @@
+import {merge, toDom} from 'skatejs-dom-diff'
+
 import {
   applyDefaults,
   getInitialProps,
@@ -24,18 +26,40 @@ function getNewState (incomingState, state) {
   return newState
 }
 
+function updateDOM (source) {
+  if (!source) {
+    return
+  }
+
+  const target = this.render()
+  merge(source, target)
+}
+
 export function createComponent (superclass) {
   return class extends superclass {
     createdCallback () {
+      let rootNode, tree
+
       this.props = getInitialProps.call(this)
       this.state = {}
 
-      if (this.propTypes) {
-        validatePropTypes.call(this)
-      }
+      this.attributeChangedCallback = (key, oldValue, newValue) => {
+        const newProps = assign({}, this.props) // Create shallow clone of props
+        const prevProps = this.props
 
-      if (this.getDefaultProps) {
-        applyDefaults.call(this, this.getDefaultProps())
+        newProps[key] = newValue
+        this.props = newProps
+
+        if (typeof this.render === 'function') {
+          updateDOM.call(this, tree)
+        }
+
+        if (typeof this.componentDidUpdate === 'function') {
+          setTimeout(
+            this.componentDidUpdate.bind(this, prevProps, this.state),
+            0
+          )
+        }
       }
 
       this.setState = (incomingState) => {
@@ -49,7 +73,7 @@ export function createComponent (superclass) {
         assign(this.state, newState)
 
         if (typeof this.render === 'function') {
-          this.render()
+          updateDOM.call(this, tree)
         }
 
         if (typeof this.componentDidUpdate === 'function') {
@@ -60,37 +84,27 @@ export function createComponent (superclass) {
         }
       }
 
+      if (this.propTypes) {
+        validatePropTypes.call(this)
+      }
+
+      if (this.getDefaultProps) {
+        applyDefaults.call(this, this.getDefaultProps())
+      }
+
       if (typeof this.componentWillMount === 'function') {
         this.componentWillMount()
       }
 
       if (typeof this.render === 'function') {
-        this.innerHTML = this.render()
+        tree = this.render()
+        rootNode = toDom(tree)
       }
     }
 
     attachedCallback () {
       if (typeof this.componentDidMount === 'function') {
         this.componentDidMount()
-      }
-    }
-
-    attributeChangedCallback (key, oldValue, newValue) {
-      const newProps = assign({}, this.props) // Create shallow clone of props
-      const prevProps = this.props
-
-      newProps[key] = newValue
-      this.props = newProps
-
-      if (typeof this.render === 'function') {
-        this.render()
-      }
-
-      if (typeof this.componentDidUpdate === 'function') {
-        setTimeout(
-          this.componentDidUpdate.bind(this, prevProps, this.state),
-          0
-        )
       }
     }
 

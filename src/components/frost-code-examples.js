@@ -1,4 +1,4 @@
-import {PropTypes, createComponent} from '../react'
+import {PropTypes, createComponent, t} from '../react'
 import {scrollIntoView} from '../utils/animation'
 
 function getSectionHeaders (examples) {
@@ -31,11 +31,13 @@ class FrostCodeExamplesBase extends HTMLDivElement {
       })
       .join('')
 
-    return `
-      <ul data-name="scroll-spy">
-        ${listItems}
-      </ul>
-      <div data-name="examples">${this.state.examples}</div>
+    return t`
+      <div>
+        <ul data-name="scroll-spy">
+          ${listItems}
+        </ul>
+        <div data-name="examples">${this.state.examples}</div>
+      </div>
     `
   }
 
