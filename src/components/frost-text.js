@@ -1,6 +1,11 @@
 import {createComponent} from '../react'
 
 class FrostTextBase extends HTMLInputElement {
+  get propTypes () {
+    return {
+    }
+  }
+
   getDefaultProps () {
     return {
     }

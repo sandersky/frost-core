@@ -1,6 +1,11 @@
 import {createComponent} from '../react'
 
 class FrostScrollBase extends HTMLDivElement {
+  get propTypes () {
+    return {
+    }
+  }
+
   getDefaultProps () {
     return {
     }
