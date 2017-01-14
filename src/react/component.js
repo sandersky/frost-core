@@ -1,23 +1,15 @@
 import {
   applyDefaults,
-  getProps,
+  getInitialProps,
   validatePropTypes
 } from './prop-types'
 
-function cloneProps (props) {
-  const clone = {}
-
-  Object.keys(props).forEach((key) => {
-    clone[key] = props[key]
-  })
-
-  return clone
-}
+const {assign, keys} = Object
 
 function getNewState (incomingState, state) {
   const newState = {}
 
-  Object.keys(state).forEach((key) => {
+  keys(state).forEach((key) => {
     if (key in incomingState) {
       return
     }
@@ -25,7 +17,7 @@ function getNewState (incomingState, state) {
     newState[key] = state[key]
   })
 
-  Object.keys(incomingState).forEach((key) => {
+  keys(incomingState).forEach((key) => {
     newState[key] = incomingState[key]
   })
 
@@ -35,8 +27,16 @@ function getNewState (incomingState, state) {
 export function createComponent (superclass) {
   return class extends superclass {
     createdCallback () {
-      this.props = getProps.call(this)
+      this.props = getInitialProps.call(this)
       this.state = {}
+
+      if (this.propTypes) {
+        validatePropTypes.call(this)
+      }
+
+      if (this.getDefaultProps) {
+        applyDefaults.call(this, this.getDefaultProps())
+      }
 
       this.setState = (incomingState) => {
         const newState = getNewState(incomingState, this.state)
@@ -46,7 +46,7 @@ export function createComponent (superclass) {
           this.componentWillUpdate(this.props, newState)
         }
 
-        Object.assign(this.state, newState)
+        assign(this.state, newState)
 
         if (typeof this.render === 'function') {
           this.render()
@@ -55,14 +55,6 @@ export function createComponent (superclass) {
         if (typeof this.componentDidUpdate === 'function') {
           this.componentDidUpdate(this.props, prevState)
         }
-      }
-
-      if (this.propTypes) {
-        validatePropTypes.call(this)
-      }
-
-      if (this.getDefaultProps) {
-        applyDefaults.call(this, this.getDefaultProps())
       }
 
       if (typeof this.componentWillMount === 'function') {
@@ -81,7 +73,7 @@ export function createComponent (superclass) {
     }
 
     attributeChangedCallback (key, oldValue, newValue) {
-      const newProps = cloneProps(this.props)
+      const newProps = assign({}, this.props) // Create shallow clone of props
       const prevProps = this.props
 
       newProps[key] = newValue

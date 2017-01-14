@@ -1,24 +1,31 @@
+const {assign, keys} = Object
+
+/**
+ * Apply default property values to unset properties
+ * @param {Object} defaults - property defaults
+ */
 export function applyDefaults (defaults) {
-  Object.keys(defaults)
+  keys(defaults)
     .forEach((key) => {
-      if (this.getAttribute(key) === null) {
-        this.setAttribute(key, defaults[key])
+      if (!this.props[key]) {
+        const value = defaults[key]
+        this.props[key] = value // Make sure property is on props for life cycle hooks
+        this.setAttribute(key, value) // Make sure property is set in DOM for CSS selectors
       }
     })
 }
 
-export function getProps () {
+/**
+ * Get initial values of properties passed in by consumer
+ * @returns {Object} initial property values
+ */
+export function getInitialProps () {
   if (typeof this.propTypes !== 'object') {
     return {}
   }
 
-  const props = {}
-
-  Object.keys(this.propTypes).forEach((key) => {
-    props[key] = this.getAttribute(key)
-  })
-
-  return props
+  return keys(this.propTypes)
+    .reduce((props, key) => assign(props, {[key]: this.getAttribute(key)}), {})
 }
 
 function isValuePresent ({key, value, required}) {
@@ -34,7 +41,7 @@ function isValuePresent ({key, value, required}) {
 }
 
 export function validatePropTypes () {
-  Object.keys(this.propTypes).forEach((key) => {
+  keys(this.propTypes).forEach((key) => {
     const validator = this.propTypes[key]
 
     if (typeof validator !== 'function') {

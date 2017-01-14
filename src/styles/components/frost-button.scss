@@ -1,9 +1,11 @@
 // General
 $frost-button-active-outline: none !default;
+$frost-button-align-items: center !default;
 $frost-button-background: transparent !default;
 $frost-button-border: 0 !default;
 $frost-button-border-radius: 2px !default;
 $frost-button-color: $frost-color-white !default;
+$frost-button-display: inline-flex !default;
 $frost-button-focus-box-shadow: 0 1px 6px transparentize($frost-color-blue-1, .25) !default;
 $frost-button-focus-outline: none !default;
 $frost-button-font-family: $frost-font-family !default;
@@ -54,11 +56,13 @@ $frost-button-small-icon-width: 20px !default;
 $frost-button-small-padding: 0 10px !default;
 
 frost-button {
+  align-items: $frost-button-align-items;
   background: $frost-button-background;
   border: $frost-button-border;
   border-radius: $frost-button-border-radius;
   color: $frost-button-color;
   cursor: pointer;
+  display: $frost-button-display;
   font-family: $frost-button-font-family;
   padding: $frost-button-padding;
 
