@@ -4,5 +4,5 @@ npm run build
 # Copy over compiled Javascript and CSS
 cp dist/frost-core* demo/
 
-# Copy over Prism them for styling code examples
+# Copy over Prism theme for styling code examples
 cp node_modules/prismjs/themes/prism-tomorrow.css demo/prism-theme.css
