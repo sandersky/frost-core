@@ -8,8 +8,8 @@
   },
   "scripts": {
     "build": "webpack && node-sass src/styles/frost-core.scss > dist/frost-core.css",
+    "build-demo": "bash ./scripts/build-demo.sh",
     "publish-gh-pages": "bash ./scripts/publish-gh-pages.sh",
-    "start": "bash ./scripts/build-demo.sh",
     "test": "karma start"
   },
   "repository": "git@github.com:ciena-frost/frost-core.git",

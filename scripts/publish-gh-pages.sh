@@ -3,7 +3,7 @@
 VERSION=`node -e "console.log(require('./package.json').version)"`
 TMP_GH_PAGES_DIR=.gh-pages-demo
 
-ember build --prod
+npm run build-demo
 cp -r . ${TMP_GH_PAGES_DIR} > /dev/null 2>&1
 cd ${TMP_GH_PAGES_DIR}
 git checkout gh-pages
