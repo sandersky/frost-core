@@ -11,4 +11,4 @@ cp -r ../demo/* .
 rm -rf demo scripts src tests
 git add --all
 git commit -m "[ci skip] Automated gh-pages commit of ${VERSION}"
-git push origin gh-pages > /dev/null 2>&1
+git push origin gh-pages
