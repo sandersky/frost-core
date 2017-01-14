@@ -6,5 +6,6 @@
 
 # Compiled source
 /coverage
-/demo/frost-core*
+/demo/*.css
+/demo/*.js
 /dist
