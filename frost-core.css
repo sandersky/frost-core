@@ -68,9 +68,17 @@ frost-button {
 frost-code-example code[class*="language-"] *, frost-code-example pre[class*="language-"] * {
   font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace; }
 
-frost-code-examples header {
-  font-size: 120%;
-  font-weight: 600; }
+frost-code-examples {
+  display: flex; }
+  frost-code-examples > * {
+    margin: 0 10px; }
+  frost-code-examples header {
+    font-size: 120%;
+    font-weight: 600; }
+  frost-code-examples [data-name="examples"] {
+    flex: 1 0 auto; }
+  frost-code-examples [data-name="scroll-spy"] {
+    flex: 0 1 auto; }
 
 * {
   font-family: Roboto, Arial, sans-serif; }
