@@ -12,7 +12,8 @@
     "build-prod": "bash ./scripts/build-prod.sh",
     "lint": "eslint src/ tests/ *.js",
     "publish-gh-pages": "bash ./scripts/publish-gh-pages.sh",
-    "test": "karma start"
+    "test": "npm run lint && npm run utest",
+    "utest": "karma start"
   },
   "repository": "git@github.com:sandersky/frost-core.git",
   "engines": {
