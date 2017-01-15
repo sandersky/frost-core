@@ -36,18 +36,9 @@ class FrostCodeExamplesBase extends HTMLDivElement {
         <ul data-name="scroll-spy">
           ${listItems}
         </ul>
-        <div data-name="examples"></div>
+        <div data-name="examples">${this.state.examples}</div>
       </div>
     `
-
-    // return t`
-    //   <div>
-    //     <ul data-name="scroll-spy">
-    //       ${listItems}
-    //     </ul>
-    //     <div data-name="examples">${this.state.examples}</div>
-    //   </div>
-    // `
   }
 
   componentDidUpdate () {

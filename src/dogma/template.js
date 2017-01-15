@@ -281,7 +281,13 @@ function parseElementAttributeValue ({currentToken, start, tokens}) {
     start += 1
   }
 
-  const attributeValueStart = start
+  if (endOfCurrentToken({currentToken, start})) {
+    currentToken = getNextToken(tokens)
+    start = 0
+  }
+
+  let attributeValueStart = start
+  let value = ''
 
   if (quote) {
     let escapeNext = false
@@ -289,16 +295,27 @@ function parseElementAttributeValue ({currentToken, start, tokens}) {
     while (currentToken[start] !== quote || escapeNext === true) {
       escapeNext = (currentToken[start] === '\\' ? !escapeNext : false)
       start += 1
+
+      if (endOfCurrentToken({currentToken, start})) {
+        value += currentToken.slice(attributeValueStart, start)
+        attributeValueStart = 0
+        currentToken = getNextToken(tokens)
+        start = 0
+      }
     }
   } else {
     while (notEndOfElementAttributeValue({currentToken, start})) start += 1
   }
 
   if (attributeValueStart < start) {
+    value += currentToken.slice(attributeValueStart, start)
+  }
+
+  if (value) {
     return {
       newCurrentToken: currentToken,
       newStart: start,
-      value: currentToken.slice(attributeValueStart, start)
+      value
     }
   }
 

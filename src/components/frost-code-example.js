@@ -15,7 +15,11 @@ class FrostCodeExampleBase extends HTMLDivElement {
     const lang = 'language-html'
 
     return t`
-      <div></div>
+      <div>
+        <h4>Example</h4>
+        ${this.state.example}
+        <pre class="${lang}"><code class="${lang}"></code></pre>
+      </div>
     `
     // return t`
     //   <div>
