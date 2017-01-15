@@ -1,4 +1,4 @@
-import {PropTypes, createComponent, t} from '../dogma'
+import {createComponent, t} from '../dogma'
 import {scrollIntoView} from '../utils/animation'
 
 function getSectionHeaders (examples) {

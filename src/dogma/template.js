@@ -1,10 +1,6 @@
-import {text} from 'skatejs-dom-diff'
-
 import {isCharWhitespace} from '../utils/string'
 
 const {isArray} = Array
-
-const TEXT_NODE_TYPE = text('').nodeType
 
 /**
  * Determine if currentToken or other remaining tokens contain any
@@ -164,7 +160,10 @@ function parseChildNodes ({currentToken, start, tokens}) {
 
 function parseElement ({allowSiblings, currentToken, start, tokens}) {
   const {elementName, newStart} = parseElementName({currentToken, start})
-  const element = {localName: elementName}
+  const element = {
+    localName: elementName,
+    nodeType: window.Node.ELEMENT_NODE
+  }
 
   start = newStart
 
@@ -379,7 +378,7 @@ function parseElementName ({currentToken, start, tokens}) {
 
 function parseTextNode ({currentToken, start, tokens}) {
   const textNode = {
-    nodeType: TEXT_NODE_TYPE,
+    nodeType: window.Node.TEXT_NODE_TYPE,
     textContent: ''
   }
 

@@ -18,16 +18,9 @@ class FrostCodeExampleBase extends HTMLDivElement {
       <div>
         <h4>Example</h4>
         ${this.state.example}
-        <pre class="${lang}"><code class="${lang}"></code></pre>
+        <pre class="${lang}"><code class="${lang}">${example}</code></pre>
       </div>
     `
-    // return t`
-    //   <div>
-    //     <h4>Example</h4>
-    //     ${this.state.example}
-    //     <pre class="${lang}"><code class="${lang}">${example}</code></pre>
-    //   </div>
-    // `
   }
 }
 
