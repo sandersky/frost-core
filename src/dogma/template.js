@@ -18,7 +18,7 @@ function containsNonWhitesapce ({currentToken, start, tokens}) {
   const pattern = /^\s*$/
   const isRemainingAllWhitespace = pattern.test(currentToken.slice(start))
   const doOtherTokensContainNonWhitespace = tokens
-    .some((token) => typeof(token) !== 'string' || !pattern.test(token))
+    .some((token) => typeof token !== 'string' || !pattern.test(token))
 
   return !isRemainingAllWhitespace || doOtherTokensContainNonWhitespace
 }
@@ -248,8 +248,6 @@ function parseElement ({allowSiblings, currentToken, start, tokens}) {
 
   const value = currentToken.slice(attributeValueStart, start - 1)
   element.attributes[attributeName] = value || true
-
-  debugger
 
   return {
     element,

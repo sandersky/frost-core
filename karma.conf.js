@@ -15,7 +15,7 @@ module.exports = function (config) {
     basePath: '',
     browsers: ['Chrome'],
     coverageReporter: {
-      dir : 'coverage/',
+      dir: 'coverage/',
       reporters: [
         {type: 'html', subdir: 'html'},
         {type: 'lcovonly', subdir: 'lcov'}
