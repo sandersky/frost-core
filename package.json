@@ -40,6 +40,7 @@
     "clean-css": "^3.4.23",
     "eslint": "^3.13.1",
     "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-mocha": "^4.8.0",
     "eslint-plugin-ocd": "0.0.6",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
