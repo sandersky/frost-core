@@ -32,7 +32,11 @@ class FrostCodeExamplesBase extends HTMLDivElement {
       .join('')
 
     return t`
-      <div/>
+      <div>
+        <ul>
+        </ul>
+        <div></div>
+      </div>
     `
 
     // return t`

@@ -1,6 +1,10 @@
-import {isCharWhitespace} from '../utils/string'
+import {text} from 'skatejs-dom-diff'
+
+import {isCharQuote, isCharWhitespace} from '../utils/string'
 
 const {isArray} = Array
+
+const TEXT_NODE_TYPE = text('').nodeType
 
 /**
  * Determine if currentToken or other remaining tokens contain any
@@ -72,18 +76,52 @@ function jumpToFirstNonWhitespaceChar (tokens) {
   }
 }
 
-function parseChildNodes ({currentToken, tokens, start}) {
+function parseChildNodes ({currentToken, start, tokens}) {
   const childNodes = []
 
-  // When no children and parent is actually just being closed
-  if (currentToken[start] === '<' && currentToken[start + 1] === '/') {
-    return {
-      childNodes,
-      end: start + 2
+  // While there is still template left to parse
+  while (tokens.length !== 0 || start < currentToken.length) {
+    // When entering an open or close element tag
+    if (currentToken[start] === '<') {
+      // When no children and parent is actually just being closed
+      if (currentToken[start + 1] === '/') {
+        return {
+          childNodes,
+          newCurrentToken: currentToken,
+          newStart: start
+        }
+      }
+
+      // When element is a new child element
+      const {element, newCurrentToken, newStart} = parseElement({
+        currentToken,
+        start: start + 1,
+        tokens
+      })
+
+      childNodes.push(element)
+
+      currentToken = newCurrentToken
+      start = newStart
+    } else {
+      const {newCurrentToken, newStart, textNode} = parseTextNode({
+        currentToken,
+        start,
+        tokens
+      })
+
+      childNodes.push(textNode)
+
+      currentToken = newCurrentToken
+      start = newStart
     }
   }
 
-  // TODO: parse children
+  return {
+    childNodes,
+    newCurrentToken: null,
+    newStart: null
+  }
 }
 
 function parseElement ({allowSiblings, currentToken, start, tokens}) {
@@ -101,7 +139,10 @@ function parseElement ({allowSiblings, currentToken, start, tokens}) {
     start += 1
   }
 
-  // TODO: process whitespace
+  // Ignore whitespace until we reach an attribute or closing of the tag
+  while (isCharWhitespace(currentToken[start])) {
+    start += 1
+  }
 
   // If element tag is inline (i.e. <foo-bar/> instead of <foo-bar></foo-bar>)
   if (currentToken[start] === '/') {
@@ -116,7 +157,11 @@ function parseElement ({allowSiblings, currentToken, start, tokens}) {
         )
       }
 
-      return element
+      return {
+        element,
+        newCurrentToken: null,
+        newStart: null
+      }
     }
   }
 
@@ -124,7 +169,15 @@ function parseElement ({allowSiblings, currentToken, start, tokens}) {
   if (currentToken[start] === '>') {
     start += 1
 
-    const {childNodes, end} = parseChildNodes({currentToken, tokens, start})
+    const {childNodes, newCurrentToken, newStart} = parseChildNodes({
+      currentToken,
+      tokens,
+      start
+    })
+
+    element.childNodes = childNodes
+    currentToken = newCurrentToken
+    start = newStart
 
     const actualClosingTag = currentToken.slice(
       start,
@@ -147,12 +200,107 @@ function parseElement ({allowSiblings, currentToken, start, tokens}) {
           `Element "${element.localName}" is not allowed to have any siblings`
         )
       }
+    }
 
-      return element
+    return {
+      element,
+      newCurrentToken: currentToken,
+      newStart: start
     }
   }
 
-  // TODO: decide what to do next
+  let attributeNameStart = start
+
+  while (
+    !isCharWhitespace(currentToken[start]) &&
+    currentToken[start] !== '='
+  ) {
+    start += 1
+  }
+
+  const attributeName = currentToken.slice(attributeNameStart, start - 1)
+  let quote = null
+
+  if (isCharQuote(currentToken[start])) {
+    quote = currentToken[quote]
+    start += 1
+  }
+
+  const attributeValueStart = start
+  let escapeNext = false
+
+  while (
+    (!isCharWhitespace(currentToken[start]) && quote === null) &&
+    (escapeNext === true || currentToken[start] === quote)
+  ) {
+    if (currentToken[start] === '\\') {
+      escapeNext = !escapeNext
+    } else {
+      escapeNext = false
+    }
+
+    start += 1
+  }
+
+  if (!isArray(element.attributes)) {
+    element.attributes = []
+  }
+
+  const value = currentToken.slice(attributeValueStart, start - 1)
+  element.attributes[attributeName] = value || true
+
+  debugger
+
+  return {
+    element,
+    newCurrentToken: currentToken,
+    newStart: start
+  }
+}
+
+function parseTextNode ({currentToken, start, tokens}) {
+  const textNode = {
+    nodeType: TEXT_NODE_TYPE,
+    textContent: ''
+  }
+
+  let subStringStart = start
+
+  // While there is still template left to parse
+  while (tokens.length !== 0 || start < currentToken.length) {
+    // When entering an element tag (means text node is complete)
+    if (currentToken[start] === '<') {
+      // If we've parsed text in the current token make sure to add it to the
+      // textContents of our textNode.
+      if (start !== 0) {
+        textNode.textContent += currentToken.slice(subStringStart, start)
+      }
+
+      return {
+        textNode,
+        newCurrentToken: currentToken,
+        newStart: start
+      }
+    }
+
+    // If we reached the end of the current token move on to the next one but
+    // first update the textContents of our textNode to include all of the text
+    // contents we just parsed in the current token.
+    if (start === currentToken.length - 1) {
+      textNode.textContent += currentToken.slice(subStringStart, start)
+      currentToken = tokens.splice(0, 1)[0]
+      start = 0
+      subStringStart = 0
+    } else {
+      start += 1
+    }
+  }
+
+  return {
+    textNode,
+    newCurrentToken: null,
+    newStart: null
+  }
 }
 
 /**
@@ -206,5 +354,5 @@ export default function (strings, ...values) {
     currentToken,
     start: start + 1,
     tokens
-  })
+  }).element
 }
