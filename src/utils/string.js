@@ -1,9 +1,4 @@
-export const QUOTE_CHARS = ['"', "'"]
 export const WHITESPACE_CHARS = [' ', '\n', '\t']
-
-export function isCharQuote (char) {
-  return QUOTE_CHARS.indexOf(char) !== -1
-}
 
 export function isCharWhitespace (char) {
   return WHITESPACE_CHARS.indexOf(char) !== -1

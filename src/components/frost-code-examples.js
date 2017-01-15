@@ -33,9 +33,9 @@ class FrostCodeExamplesBase extends HTMLDivElement {
 
     return t`
       <div>
-        <ul>
+        <ul data-name="scroll-spy">
         </ul>
-        <div></div>
+        <div data-name="examples"></div>
       </div>
     `
 
