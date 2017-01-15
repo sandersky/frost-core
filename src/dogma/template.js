@@ -388,7 +388,7 @@ function parseTextNode ({currentToken, start, tokens}) {
     // If we reached the end of the current token move on to the next one but
     // first update the textContents of our textNode to include all of the text
     // contents we just parsed in the current token.
-    if (start === currentToken.length - 1) {
+    if (endOfCurrentToken({currentToken, start})) {
       textNode.textContent += currentToken.slice(subStringStart, start)
       currentToken = getNextToken(tokens)
       start = 0
