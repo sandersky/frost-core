@@ -1,15 +1,6 @@
-import {createComponent} from '../dogma'
+import {createComponent} from '../dogma/component'
 
-class FrostTextareaBase extends HTMLInputElement {
-  get propTypes () {
-    return {
-    }
-  }
-
-  getDefaultProps () {
-    return {
-    }
-  }
+class FrostTextarea extends HTMLInputElement {
 }
 
-export default class FrostTextarea extends createComponent(FrostTextareaBase) {}
+export default createComponent(FrostTextarea)

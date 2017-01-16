@@ -1,15 +1,6 @@
-import {createComponent} from '../dogma'
+import {createComponent} from '../dogma/component'
 
-class FrostScrollBase extends HTMLDivElement {
-  get propTypes () {
-    return {
-    }
-  }
-
-  getDefaultProps () {
-    return {
-    }
-  }
+class FrostScroll extends HTMLDivElement {
 }
 
-export default class FrostScroll extends createComponent(FrostScrollBase) {}
+export default createComponent(FrostScroll)

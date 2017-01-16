@@ -1,4 +1,4 @@
-describe('frost-radio-button', function () {
+describe('frost-core / components / frost-radio-button', function () {
   beforeEach(function () {
     this.element = document.createElement('frost-radio-button')
   })

@@ -1,15 +1,6 @@
-import {createComponent} from '../dogma'
+import {createComponent} from '../dogma/component'
 
-class FrostLinkBase extends HTMLAnchorElement {
-  get propTypes () {
-    return {
-    }
-  }
-
-  getDefaultProps () {
-    return {
-    }
-  }
+class FrostLink extends HTMLAnchorElement {
 }
 
-export default class FrostLink extends createComponent(FrostLinkBase) {}
+export default createComponent(FrostLink)

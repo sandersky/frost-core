@@ -1,4 +1,5 @@
-import {PropTypes, createComponent} from '../dogma'
+import {createComponent} from '../dogma/component'
+import {PropTypes} from '../dogma/prop-types'
 
 export const priorities = [
   'primary',
@@ -12,7 +13,7 @@ export const sizes = [
   'small'
 ]
 
-class FrostButtonBase extends HTMLButtonElement {
+class FrostButton extends HTMLButtonElement {
   get propTypes () {
     return {
       priority: PropTypes.oneOf(priorities),
@@ -28,4 +29,4 @@ class FrostButtonBase extends HTMLButtonElement {
   }
 }
 
-export default class FrostButton extends createComponent(FrostButtonBase) {}
+export default createComponent(FrostButton)

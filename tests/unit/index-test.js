@@ -1,17 +1,17 @@
-import FrostButtonComponent from '../src/components/frost-button'
-import FrostCheckboxComponent from '../src/components/frost-checkbox'
-import FrostCodeExampleComponent from '../src/components/frost-code-example'
-import FrostCodeExamplesComponent from '../src/components/frost-code-examples'
-import FrostIconComponent from '../src/components/frost-icon'
-import FrostLinkComponent from '../src/components/frost-link'
-import FrostPasswordComponent from '../src/components/frost-password'
-import FrostRadioButtonComponent from '../src/components/frost-radio-button'
-import FrostRadioGroupComponent from '../src/components/frost-radio-group'
-import FrostScrollComponent from '../src/components/frost-scroll'
-import FrostSelectComponent from '../src/components/frost-select'
-import FrostTextComponent from '../src/components/frost-text'
-import FrostTextareaComponent from '../src/components/frost-textarea'
-import FrostToggleComponent from '../src/components/frost-toggle'
+import FrostButtonComponent from '../../src/components/frost-button'
+import FrostCheckboxComponent from '../../src/components/frost-checkbox'
+import FrostCodeExampleComponent from '../../src/components/frost-code-example'
+import FrostCodeExamplesComponent from '../../src/components/frost-code-examples'
+import FrostIconComponent from '../../src/components/frost-icon'
+import FrostLinkComponent from '../../src/components/frost-link'
+import FrostPasswordComponent from '../../src/components/frost-password'
+import FrostRadioButtonComponent from '../../src/components/frost-radio-button'
+import FrostRadioGroupComponent from '../../src/components/frost-radio-group'
+import FrostScrollComponent from '../../src/components/frost-scroll'
+import FrostSelectComponent from '../../src/components/frost-select'
+import FrostTextComponent from '../../src/components/frost-text'
+import FrostTextareaComponent from '../../src/components/frost-textarea'
+import FrostToggleComponent from '../../src/components/frost-toggle'
 
 import {
   FrostButton,
@@ -28,7 +28,7 @@ import {
   FrostText,
   FrostTextarea,
   FrostToggle
-} from '../src/index'
+} from '../../src/index'
 
 describe('frost-core', function () {
   it('exports FrostButton', function () {

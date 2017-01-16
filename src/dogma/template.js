@@ -1,4 +1,4 @@
-import {isCharWhitespace} from '../utils/string'
+import {isCharWhitespace} from './utils/string'
 
 const {isArray} = Array
 

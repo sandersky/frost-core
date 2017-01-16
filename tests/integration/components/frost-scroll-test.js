@@ -1,4 +1,4 @@
-describe('frost-scroll', function () {
+describe('frost-core / components / frost-scroll', function () {
   beforeEach(function () {
     this.element = document.createElement('frost-scroll')
   })

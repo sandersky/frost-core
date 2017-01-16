@@ -1,4 +1,4 @@
-describe('frost-password', function () {
+describe('frost-core / components / frost-password', function () {
   beforeEach(function () {
     this.element = document.createElement('frost-password')
   })

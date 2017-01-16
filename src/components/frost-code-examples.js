@@ -1,5 +1,6 @@
-import {createComponent, t} from '../dogma'
-import {scrollIntoView} from '../utils/animation'
+import {createComponent} from '../dogma/component'
+import t from '../dogma/template'
+import {scrollIntoView} from '../dogma/utils/animation'
 
 function getSectionHeaders (examples) {
   const container = document.createElement('div')
@@ -17,7 +18,7 @@ function getSectionHeaders (examples) {
     .filter((header) => header !== null)
 }
 
-class FrostCodeExamplesBase extends HTMLDivElement {
+class FrostCodeExamples extends HTMLDivElement {
   componentWillMount () {
     this.setState({
       examples: this.innerHTML
@@ -62,4 +63,4 @@ class FrostCodeExamplesBase extends HTMLDivElement {
   }
 }
 
-export default class FrostCodeExamples extends createComponent(FrostCodeExamplesBase) {}
+export default createComponent(FrostCodeExamples)

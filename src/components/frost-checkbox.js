@@ -1,15 +1,6 @@
-import {createComponent} from '../dogma'
+import {createComponent} from '../dogma/component'
 
-class FrostCheckboxBase extends HTMLInputElement {
-  get propTypes () {
-    return {
-    }
-  }
-
-  getDefaultProps () {
-    return {
-    }
-  }
+class FrostCheckbox extends HTMLInputElement {
 }
 
-export default class FrostCheckbox extends createComponent(FrostCheckboxBase) {}
+export default createComponent(FrostCheckbox)

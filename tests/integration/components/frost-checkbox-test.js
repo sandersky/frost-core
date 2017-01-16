@@ -1,4 +1,4 @@
-describe('frost-checkbox', function () {
+describe('frost-core / components / frost-checkbox', function () {
   beforeEach(function () {
     this.element = document.createElement('frost-checkbox')
   })

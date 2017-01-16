@@ -1,9 +1,10 @@
 import Prism from 'prismjs'
 
-import {createComponent, t} from '../dogma'
-import {trimSuperfluousLeadingWhitespace} from '../utils/string'
+import {createComponent} from '../dogma/component'
+import t from '../dogma/template'
+import {trimSuperfluousLeadingWhitespace} from '../dogma/utils/string'
 
-class FrostCodeExampleBase extends HTMLDivElement {
+class FrostCodeExample extends HTMLDivElement {
   componentWillMount () {
     this.setState({
       example: trimSuperfluousLeadingWhitespace(this.innerHTML)
@@ -24,4 +25,4 @@ class FrostCodeExampleBase extends HTMLDivElement {
   }
 }
 
-export default class FrostCodeExample extends createComponent(FrostCodeExampleBase) {}
+export default createComponent(FrostCodeExample)

@@ -1,4 +1,4 @@
-describe('frost-code-examples', function () {
+describe('frost-core / components / frost-code-examples', function () {
   beforeEach(function () {
     this.element = document.createElement('frost-code-examples')
   })

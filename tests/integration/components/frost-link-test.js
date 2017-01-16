@@ -1,4 +1,4 @@
-describe('frost-link', function () {
+describe('frost-core / components / frost-link', function () {
   beforeEach(function () {
     this.element = document.createElement('frost-link')
   })

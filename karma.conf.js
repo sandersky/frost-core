@@ -22,7 +22,13 @@ module.exports = function (config) {
       ]
     },
     files: [
-      'src/**/*.js',
+      // NOTE: for some reason when we include src/components the tests complain
+      // that that createComponent doesn't exists on undefined in frost-button.
+      // Since src/index.js actually imports the components and registers them
+      // the tests still work as they don't need to explicitly import the
+      // components.
+      'src/dogma/**/*.js',
+      'src/*.js',
       'tests/**/*.js'
     ],
     frameworks: [
@@ -33,7 +39,7 @@ module.exports = function (config) {
       'src/**/*.js': ['babel'],
       'tests/**/*.js': ['babel']
     },
-    reporters: ['progress', 'coverage'],
+    reporters: ['mocha', 'coverage'],
     singleRun: true
   })
 }

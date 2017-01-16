@@ -1,15 +1,6 @@
-import {createComponent} from '../dogma'
+import {createComponent} from '../dogma/component'
 
-class FrostRadioButtonBase extends HTMLInputElement {
-  get propTypes () {
-    return {
-    }
-  }
-
-  getDefaultProps () {
-    return {
-    }
-  }
+class FrostRadioButton extends HTMLInputElement {
 }
 
-export default class FrostRadioButton extends createComponent(FrostRadioButtonBase) {}
+export default createComponent(FrostRadioButton)

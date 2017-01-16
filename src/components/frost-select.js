@@ -1,15 +1,6 @@
-import {createComponent} from '../dogma'
+import {createComponent} from '../dogma/component'
 
-class FrostSelectBase extends HTMLSelectElement {
-  get propTypes () {
-    return {
-    }
-  }
-
-  getDefaultProps () {
-    return {
-    }
-  }
+class FrostSelect extends HTMLSelectElement {
 }
 
-export default class FrostSelect extends createComponent(FrostSelectBase) {}
+export default createComponent(FrostSelect)

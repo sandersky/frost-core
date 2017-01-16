@@ -1,15 +1,6 @@
-import {createComponent} from '../dogma'
+import {createComponent} from '../dogma/component'
 
-class FrostToggleBase extends HTMLInputElement {
-  get propTypes () {
-    return {
-    }
-  }
-
-  getDefaultProps () {
-    return {
-    }
-  }
+class FrostToggle extends HTMLInputElement {
 }
 
-export default class FrostToggle extends createComponent(FrostToggleBase) {}
+export default createComponent(FrostToggle)

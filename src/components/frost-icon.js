@@ -1,15 +1,6 @@
-import {createComponent} from '../dogma'
+import {createComponent} from '../dogma/component'
 
-class FrostIconBase extends HTMLElement {
-  get propTypes () {
-    return {
-    }
-  }
-
-  getDefaultProps () {
-    return {
-    }
-  }
+class FrostIcon extends HTMLElement {
 }
 
-export default class FrostIcon extends createComponent(FrostIconBase) {}
+export default createComponent(FrostIcon)
