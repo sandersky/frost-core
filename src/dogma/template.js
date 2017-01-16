@@ -1,5 +1,3 @@
-import {isCharWhitespace} from './utils/string'
-
 const {isArray} = Array
 
 /**
@@ -47,6 +45,10 @@ function flattenTemplateLiteralArguments (strings, values) {
 
 function getNextToken (tokens) {
   return tokens.splice(0, 1)[0]
+}
+
+function isCharWhitespace (char) {
+  return [' ', '\n', '\t'].indexOf(char) !== -1
 }
 
 /**
@@ -160,7 +162,10 @@ function parseChildNodes ({currentToken, start, tokens}) {
 
 function parseElement ({allowSiblings, currentToken, start, tokens}) {
   const {elementName, newStart} = parseElementName({currentToken, start})
+
   const element = {
+    attributes: {},
+    childNodes: [],
     localName: elementName,
     nodeType: window.Node.ELEMENT_NODE
   }
@@ -378,7 +383,7 @@ function parseElementName ({currentToken, start, tokens}) {
 
 function parseTextNode ({currentToken, start, tokens}) {
   const textNode = {
-    nodeType: window.Node.TEXT_NODE_TYPE,
+    nodeType: window.Node.TEXT_NODE,
     textContent: ''
   }
 

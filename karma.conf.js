@@ -35,6 +35,9 @@ module.exports = function (config) {
       'mocha',
       'chai'
     ],
+    mochaReporter: {
+      showDiff: true
+    },
     preprocessors: {
       'src/**/*.js': ['babel'],
       'tests/**/*.js': ['babel']
