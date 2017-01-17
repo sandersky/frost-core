@@ -107,6 +107,7 @@ function nextCharIsPartOfElementName ({currentToken, start}) {
 
 function notEndOfElementAttributeName ({currentToken, start}) {
   return (
+    !isCharWhitespace(currentToken[start]) &&
     notEndOfElementTag({currentToken, start}) &&
     currentToken[start] !== '='
   )
@@ -315,8 +316,6 @@ function parseElementAttributeValue ({currentToken, start, tokens}) {
   }
 
   while (continueParsing()) {
-    console.info(currentToken[start], currentToken)
-
     if (currentToken[start] === '\\') {
       currentToken = currentToken.substr(0, start) + currentToken.substr(start + 1)
       escapeNext = true

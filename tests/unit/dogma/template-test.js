@@ -438,6 +438,1097 @@ describe('dogma / template', function () {
       })
     })
 
+    describe('parses element with multiple attributes', function () {
+      describe('when first is bolean attrubute', function () {
+        it('when second is bolean attrubute', function () {
+          expect(t`<input checked disabled/>`).to.eql({
+            attributes: {
+              checked: true,
+              disabled: true
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes', function () {
+          expect(t`<input checked disabled='disabled'/>`).to.eql({
+            attributes: {
+              checked: true,
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes with escaped single quote in value', function () {
+          expect(t`<input checked data-test='foo\\'bar'/>`).to.eql({
+            attributes: {
+              checked: true,
+              'data-test': 'foo\'bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes', function () {
+          expect(t`<input checked disabled="disabled"/>`).to.eql({
+            attributes: {
+              checked: true,
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes with escaped double quote in value', function () {
+          expect(t`<input checked data-test="foo\\"bar"/>`).to.eql({
+            attributes: {
+              checked: true,
+              'data-test': 'foo"bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in no quotes', function () {
+          expect(t`<input checked disabled=disabled/>`).to.eql({
+            attributes: {
+              checked: true,
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in no quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input checked disabled=${value}/>`).to.eql({
+            attributes: {
+              checked: true,
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in single quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input checked disabled='${value}'/>`).to.eql({
+            attributes: {
+              checked: true,
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in double quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input checked disabled="${value}"/>`).to.eql({
+            attributes: {
+              checked: true,
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+      })
+
+      describe('when first is literal value in single quotes', function () {
+        it('when second is bolean attrubute', function () {
+          expect(t`<input checked='checked' disabled/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: true
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes', function () {
+          expect(t`<input checked='checked' disabled='disabled'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes with escaped single quote in value', function () {
+          expect(t`<input checked='checked' data-test='foo\\'bar'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              'data-test': 'foo\'bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes', function () {
+          expect(t`<input checked='checked' disabled="disabled"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes with escaped double quote in value', function () {
+          expect(t`<input checked='checked' data-test="foo\\"bar"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              'data-test': 'foo"bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in no quotes', function () {
+          expect(t`<input checked='checked' disabled=disabled/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in no quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input checked='checked' disabled=${value}/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in single quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input checked='checked' disabled='${value}'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in double quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input checked='checked' disabled="${value}"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+      })
+
+      describe('when first is literal value in single quotes with escaped single quote in value', function () {
+        it('when second is bolean attrubute', function () {
+          expect(t`<input data-foo='bar\\'baz' disabled/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar\'baz',
+              disabled: true
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes', function () {
+          expect(t`<input data-foo='bar\\'baz' disabled='disabled'/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar\'baz',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes with escaped single quote in value', function () {
+          expect(t`<input data-foo='bar\\'baz' data-test='foo\\'bar'/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar\'baz',
+              'data-test': 'foo\'bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes', function () {
+          expect(t`<input data-foo='bar\\'baz' disabled="disabled"/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar\'baz',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes with escaped double quote in value', function () {
+          expect(t`<input data-foo='bar\\'baz' data-test="foo\\"bar"/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar\'baz',
+              'data-test': 'foo"bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in no quotes', function () {
+          expect(t`<input data-foo='bar\\'baz' disabled=disabled/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar\'baz',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in no quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input data-foo='bar\\'baz' disabled=${value}/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar\'baz',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in single quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input data-foo='bar\\'baz' disabled='${value}'/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar\'baz',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in double quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input data-foo='bar\\'baz' disabled="${value}"/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar\'baz',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+      })
+
+      describe('when first is literal value in double quotes', function () {
+        it('when second is bolean attrubute', function () {
+          expect(t`<input checked="checked" disabled/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: true
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes', function () {
+          expect(t`<input checked="checked" disabled='disabled'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes with escaped single quote in value', function () {
+          expect(t`<input checked="checked" data-test='foo\\'bar'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              'data-test': 'foo\'bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes', function () {
+          expect(t`<input checked="checked" disabled="disabled"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes with escaped double quote in value', function () {
+          expect(t`<input checked="checked" data-test="foo\\"bar"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              'data-test': 'foo"bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in no quotes', function () {
+          expect(t`<input checked="checked" disabled=disabled/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in no quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input checked="checked" disabled=${value}/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in single quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input checked="checked" disabled='${value}'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in double quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input checked="checked" disabled="${value}"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+      })
+
+      describe('when first is literal value in double quotes with escaped double quote in value', function () {
+        it('when second is bolean attrubute', function () {
+          expect(t`<input data-foo="bar\\"baz" disabled/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar"baz',
+              disabled: true
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes', function () {
+          expect(t`<input data-foo="bar\\"baz" disabled='disabled'/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar"baz',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes with escaped single quote in value', function () {
+          expect(t`<input data-foo="bar\\"baz" data-test='foo\\'bar'/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar"baz',
+              'data-test': 'foo\'bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes', function () {
+          expect(t`<input data-foo="bar\\"baz" disabled="disabled"/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar"baz',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes with escaped double quote in value', function () {
+          expect(t`<input data-foo="bar\\"baz" data-test="foo\\"bar"/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar"baz',
+              'data-test': 'foo"bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in no quotes', function () {
+          expect(t`<input data-foo="bar\\"baz" disabled=disabled/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar"baz',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in no quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input data-foo="bar\\"baz" disabled=${value}/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar"baz',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in single quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input data-foo="bar\\"baz" disabled='${value}'/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar"baz',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in double quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input data-foo="bar\\"baz" disabled="${value}"/>`).to.eql({
+            attributes: {
+              'data-foo': 'bar"baz',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+      })
+
+      describe('when first is literal value in no quotes', function () {
+        it('when second is bolean attrubute', function () {
+          expect(t`<input checked=checked disabled/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: true
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes', function () {
+          expect(t`<input checked=checked disabled='disabled'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes with escaped single quote in value', function () {
+          expect(t`<input checked=checked data-test='foo\\'bar'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              'data-test': 'foo\'bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes', function () {
+          expect(t`<input checked=checked disabled="disabled"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes with escaped double quote in value', function () {
+          expect(t`<input checked=checked data-test="foo\\"bar"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              'data-test': 'foo"bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in no quotes', function () {
+          expect(t`<input checked=checked disabled=disabled/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in no quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input checked=checked disabled=${value}/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in single quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input checked=checked disabled='${value}'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in double quotes', function () {
+          const value = 'disabled'
+
+          expect(t`<input checked=checked disabled="${value}"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+      })
+
+      describe('when first is value substitution in no quotes', function () {
+        it('when second is bolean attrubute', function () {
+          const value = 'checked'
+
+          expect(t`<input checked=${value} disabled/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: true
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes', function () {
+          const value = 'checked'
+
+          expect(t`<input checked=${value} disabled='disabled'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes with escaped single quote in value', function () {
+          const value = 'checked'
+
+          expect(t`<input checked=${value} data-test='foo\\'bar'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              'data-test': 'foo\'bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes', function () {
+          const value = 'checked'
+
+          expect(t`<input checked=${value} disabled="disabled"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes with escaped double quote in value', function () {
+          const value = 'checked'
+
+          expect(t`<input checked=${value} data-test="foo\\"bar"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              'data-test': 'foo"bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in no quotes', function () {
+          const value = 'checked'
+
+          expect(t`<input checked=${value} disabled=disabled/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in no quotes', function () {
+          const value1 = 'checked'
+          const value2 = 'disabled'
+
+          expect(t`<input checked=${value1} disabled=${value2}/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in single quotes', function () {
+          const value1 = 'checked'
+          const value2 = 'disabled'
+
+          expect(t`<input checked=${value1} disabled='${value2}'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in double quotes', function () {
+          const value1 = 'checked'
+          const value2 = 'disabled'
+
+          expect(t`<input checked=${value1} disabled="${value2}"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+      })
+
+      describe('when first is value substitution in single quotes', function () {
+        it('when second is bolean attrubute', function () {
+          const value = 'checked'
+
+          expect(t`<input checked='${value}' disabled/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: true
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes', function () {
+          const value = 'checked'
+
+          expect(t`<input checked='${value}' disabled='disabled'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes with escaped single quote in value', function () {
+          const value = 'checked'
+
+          expect(t`<input checked='${value}' data-test='foo\\'bar'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              'data-test': 'foo\'bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes', function () {
+          const value = 'checked'
+
+          expect(t`<input checked='${value}' disabled="disabled"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes with escaped double quote in value', function () {
+          const value = 'checked'
+
+          expect(t`<input checked='${value}' data-test="foo\\"bar"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              'data-test': 'foo"bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in no quotes', function () {
+          const value = 'checked'
+
+          expect(t`<input checked='${value}' disabled=disabled/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in no quotes', function () {
+          const value1 = 'checked'
+          const value2 = 'disabled'
+
+          expect(t`<input checked='${value1}' disabled=${value2}/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in single quotes', function () {
+          const value1 = 'checked'
+          const value2 = 'disabled'
+
+          expect(t`<input checked='${value1}' disabled='${value2}'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in double quotes', function () {
+          const value1 = 'checked'
+          const value2 = 'disabled'
+
+          expect(t`<input checked='${value1}' disabled="${value2}"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+      })
+
+      describe('when first is value substitution in double quotes', function () {
+        it('when second is bolean attrubute', function () {
+          const value = 'checked'
+
+          expect(t`<input checked="${value}" disabled/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: true
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes', function () {
+          const value = 'checked'
+
+          expect(t`<input checked="${value}" disabled='disabled'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in single quotes with escaped single quote in value', function () {
+          const value = 'checked'
+
+          expect(t`<input checked="${value}" data-test='foo\\'bar'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              'data-test': 'foo\'bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes', function () {
+          const value = 'checked'
+
+          expect(t`<input checked="${value}" disabled="disabled"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in double quotes with escaped double quote in value', function () {
+          const value = 'checked'
+
+          expect(t`<input checked="${value}" data-test="foo\\"bar"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              'data-test': 'foo"bar'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is literal value in no quotes', function () {
+          const value = 'checked'
+
+          expect(t`<input checked="${value}" disabled=disabled/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in no quotes', function () {
+          const value1 = 'checked'
+          const value2 = 'disabled'
+
+          expect(t`<input checked="${value1}" disabled=${value2}/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in single quotes', function () {
+          const value1 = 'checked'
+          const value2 = 'disabled'
+
+          expect(t`<input checked="${value1}" disabled='${value2}'/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('when second is value substitution in double quotes', function () {
+          const value1 = 'checked'
+          const value2 = 'disabled'
+
+          expect(t`<input checked="${value1}" disabled="${value2}"/>`).to.eql({
+            attributes: {
+              checked: 'checked',
+              disabled: 'disabled'
+            },
+            childNodes: [],
+            localName: 'input',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+      })
+    })
+
     describe('when element with single child', function () {
       it('parses single inline element child with no whitespace before /', function () {
         expect(t`<div><span/></div>`).to.eql({
