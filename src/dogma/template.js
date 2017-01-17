@@ -158,7 +158,10 @@ function parseChildNodes ({currentToken, start, tokens}) {
         tokens
       })
 
-      childNodes.push(textNode)
+      // If text node doesn't contain any content then it has no value
+      if (textNode.textContent !== '') {
+        childNodes.push(textNode)
+      }
 
       currentToken = newCurrentToken
       start = newStart
