@@ -41,6 +41,13 @@ function flattenTemplateLiteralArguments (strings, values) {
   }
 
   return stringsWithValuesInserted
+    .filter((string) => {
+      return (
+        string !== '' &&
+        string !== null &&
+        string !== undefined
+      )
+    })
 }
 
 function getNextToken (tokens) {
@@ -58,8 +65,15 @@ function isCharWhitespace (char) {
  * @returns {Object} token and index for first non-whitespace character
  */
 function jumpToFirstNonWhitespaceChar (tokens) {
+  const errorMessage = "Template literal shouldn't have a substitution that " +
+  "evaluates to a type other than string before it's first opening element tag"
+
   let currentToken = getNextToken(tokens)
   let start = 0
+
+  if (typeof currentToken !== 'string') {
+    throw new Error(errorMessage)
+  }
 
   while (currentToken.length > start && isCharWhitespace(currentToken[start])) {
     start += 1
@@ -68,10 +82,7 @@ function jumpToFirstNonWhitespaceChar (tokens) {
       currentToken = getNextToken(tokens)
 
       if (typeof currentToken !== 'string') {
-        throw new Error(
-          "Template literal shouldn't have a substitution that evaluates to a" +
-          "type other than string before it's first opening element tag"
-        )
+        throw new Error(errorMessage)
       }
     }
   }
@@ -185,7 +196,7 @@ function parseElement ({allowSiblings, currentToken, start, tokens}) {
   // If element tag is inline (i.e. <foo-bar/> instead of <foo-bar></foo-bar>)
   if (currentToken[start] === '/') {
     if (currentToken[start + 1] !== '>') {
-      throw new Error(`Missing > on closing tag "${element.localName}"`)
+      throw new Error(`Expected ">" after "/" for "${element.localName}"`)
     }
 
     if (allowSiblings === false) {
@@ -354,6 +365,8 @@ function parseElementAttributes ({currentToken, start, tokens}) {
       attributes[name] = value
       currentToken = postValueToken
       start = postValueStart
+    } else if (name) {
+      attributes[name] = true
     }
 
     if (endOfCurrentToken({currentToken, start})) {
@@ -433,10 +446,6 @@ function parseTextNode ({currentToken, start, tokens}) {
  * @param {Number} start - index of 1st non-whitespace character in currentToken
  */
 function validateFirstNonWhitespaceChar (currentToken, start) {
-  if (currentToken === undefined) {
-    throw new Error('Template literal must contain a root element')
-  }
-
   if (currentToken[start] !== '<') {
     throw new Error(
       'Template literal should begin with an element (leading whitespace is ' +
@@ -451,7 +460,7 @@ function validateFirstNonWhitespaceChar (currentToken, start) {
  */
 function validateFlattenedTemplateLiteralArguments (tokens) {
   if (tokens.length === 0) {
-    throw new Error('Call to t() should pass at least one token')
+    throw new Error('Template literal should be passed content')
   }
 
   if (typeof tokens[0] !== 'string') {
