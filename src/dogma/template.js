@@ -296,32 +296,42 @@ function parseElementAttributeValue ({currentToken, start, tokens}) {
   if (['"', "'"].indexOf(currentToken[start]) !== -1) {
     quote = currentToken[start]
     start += 1
-  }
 
-  if (endOfCurrentToken({currentToken, start})) {
-    currentToken = getNextToken(tokens)
-    start = 0
+    if (endOfCurrentToken({currentToken, start})) {
+      currentToken = getNextToken(tokens)
+      start = 0
+    }
   }
 
   let attributeValueStart = start
+  let escapeNext = false
   let value = ''
+  let continueParsing
 
   if (quote) {
-    let escapeNext = false
-
-    while (currentToken[start] !== quote || escapeNext === true) {
-      escapeNext = (currentToken[start] === '\\' ? !escapeNext : false)
-      start += 1
-
-      if (endOfCurrentToken({currentToken, start})) {
-        value += currentToken.slice(attributeValueStart, start)
-        attributeValueStart = 0
-        currentToken = getNextToken(tokens)
-        start = 0
-      }
-    }
+    continueParsing = () => currentToken[start] !== quote || escapeNext === true
   } else {
-    while (notEndOfElementAttributeValue({currentToken, start})) start += 1
+    continueParsing = () => notEndOfElementAttributeValue({currentToken, start})
+  }
+
+  while (continueParsing()) {
+    console.info(currentToken[start], currentToken)
+
+    if (currentToken[start] === '\\') {
+      currentToken = currentToken.substr(0, start) + currentToken.substr(start + 1)
+      escapeNext = true
+    } else {
+      escapeNext = false
+    }
+
+    start += 1
+
+    if (endOfCurrentToken({currentToken, start})) {
+      value += currentToken.slice(attributeValueStart, start)
+      attributeValueStart = 0
+      currentToken = getNextToken(tokens)
+      start = 0
+    }
   }
 
   if (attributeValueStart < start) {
@@ -358,11 +368,18 @@ function parseElementAttributes ({currentToken, start, tokens}) {
     start = newStart
 
     if (name && currentToken[start] === '=') {
+      start = start + 1
+
+      if (endOfCurrentToken({currentToken, start})) {
+        currentToken = getNextToken(tokens)
+        start = 0
+      }
+
       const {
         newCurrentToken: postValueToken,
         newStart: postValueStart,
         value
-      } = parseElementAttributeValue({currentToken, start: start + 1, tokens})
+      } = parseElementAttributeValue({currentToken, start, tokens})
 
       attributes[name] = value
       currentToken = postValueToken

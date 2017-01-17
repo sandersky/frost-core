@@ -276,6 +276,18 @@ describe('dogma / template', function () {
       expect(() => {
         t`<div/><span/>`
       }).to.throw('Element "div" is not allowed to have any siblings')
+
+      expect(() => {
+        t`<div></div><span/>`
+      }).to.throw('Element "div" is not allowed to have any siblings')
+
+      expect(() => {
+        t`<div/><span></span>`
+      }).to.throw('Element "div" is not allowed to have any siblings')
+
+      expect(() => {
+        t`<div></div><span></span>`
+      }).to.throw('Element "div" is not allowed to have any siblings')
     })
 
     it('throws error when root element and text node sibling', function () {
@@ -319,47 +331,110 @@ describe('dogma / template', function () {
       expect(t`${undefined}<div/>`).to.eql(emptyDiv)
     })
 
-    it('parses element with single bolean attrubute', function () {
-      expect(t`<input disabled/>`).to.eql({
-        attributes: {
-          disabled: true
-        },
-        childNodes: [],
-        localName: 'input',
-        nodeType: window.Node.ELEMENT_NODE
+    describe('parses element with single attribute', function () {
+      it('when bolean attrubute', function () {
+        expect(t`<input disabled/>`).to.eql({
+          attributes: {
+            disabled: true
+          },
+          childNodes: [],
+          localName: 'input',
+          nodeType: window.Node.ELEMENT_NODE
+        })
       })
-    })
 
-    it('parses element with single attrubute (single quotes)', function () {
-      expect(t`<input disabled='disabled'/>`).to.eql({
-        attributes: {
-          disabled: 'disabled'
-        },
-        childNodes: [],
-        localName: 'input',
-        nodeType: window.Node.ELEMENT_NODE
+      it('when literal value in single quotes', function () {
+        expect(t`<input disabled='disabled'/>`).to.eql({
+          attributes: {
+            disabled: 'disabled'
+          },
+          childNodes: [],
+          localName: 'input',
+          nodeType: window.Node.ELEMENT_NODE
+        })
       })
-    })
 
-    it('parses element with single attrubute (double quotes)', function () {
-      expect(t`<input disabled="disabled"/>`).to.eql({
-        attributes: {
-          disabled: 'disabled'
-        },
-        childNodes: [],
-        localName: 'input',
-        nodeType: window.Node.ELEMENT_NODE
+      it('when literal value in single quotes with escaped single quote in value', function () {
+        expect(t`<input data-test='foo\\'bar'/>`).to.eql({
+          attributes: {
+            'data-test': 'foo\'bar'
+          },
+          childNodes: [],
+          localName: 'input',
+          nodeType: window.Node.ELEMENT_NODE
+        })
       })
-    })
 
-    it('parses element with single attrubute (no quotes)', function () {
-      expect(t`<input disabled=disabled/>`).to.eql({
-        attributes: {
-          disabled: 'disabled'
-        },
-        childNodes: [],
-        localName: 'input',
-        nodeType: window.Node.ELEMENT_NODE
+      it('when literal value in double quotes', function () {
+        expect(t`<input disabled="disabled"/>`).to.eql({
+          attributes: {
+            disabled: 'disabled'
+          },
+          childNodes: [],
+          localName: 'input',
+          nodeType: window.Node.ELEMENT_NODE
+        })
+      })
+
+      it('when literal value in double quotes with escaped double quote in value', function () {
+        expect(t`<input data-test="foo\\"bar"/>`).to.eql({
+          attributes: {
+            'data-test': 'foo"bar'
+          },
+          childNodes: [],
+          localName: 'input',
+          nodeType: window.Node.ELEMENT_NODE
+        })
+      })
+
+      it('when literal value in no quotes', function () {
+        expect(t`<input disabled=disabled/>`).to.eql({
+          attributes: {
+            disabled: 'disabled'
+          },
+          childNodes: [],
+          localName: 'input',
+          nodeType: window.Node.ELEMENT_NODE
+        })
+      })
+
+      it('when value substitution in no quotes', function () {
+        const value = 'disabled'
+
+        expect(t`<input disabled=${value}/>`).to.eql({
+          attributes: {
+            disabled: 'disabled'
+          },
+          childNodes: [],
+          localName: 'input',
+          nodeType: window.Node.ELEMENT_NODE
+        })
+      })
+
+      it('when value substitution in single quotes', function () {
+        const value = 'disabled'
+
+        expect(t`<input disabled='${value}'/>`).to.eql({
+          attributes: {
+            disabled: 'disabled'
+          },
+          childNodes: [],
+          localName: 'input',
+          nodeType: window.Node.ELEMENT_NODE
+        })
+      })
+
+      it('when value substitution in double quotes', function () {
+        const value = 'disabled'
+
+        expect(t`<input disabled="${value}"/>`).to.eql({
+          attributes: {
+            disabled: 'disabled'
+          },
+          childNodes: [],
+          localName: 'input',
+          nodeType: window.Node.ELEMENT_NODE
+        })
       })
     })
 
