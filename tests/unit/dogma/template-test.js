@@ -319,7 +319,7 @@ describe('dogma / template', function () {
       expect(t`${undefined}<div/>`).to.eql(emptyDiv)
     })
 
-    it('parse element with single bolean attrubute', function () {
+    it('parses element with single bolean attrubute', function () {
       expect(t`<input disabled/>`).to.eql({
         attributes: {
           disabled: true
@@ -330,7 +330,7 @@ describe('dogma / template', function () {
       })
     })
 
-    it('parse element with single attrubute (single quotes)', function () {
+    it('parses element with single attrubute (single quotes)', function () {
       expect(t`<input disabled='disabled'/>`).to.eql({
         attributes: {
           disabled: 'disabled'
@@ -341,7 +341,7 @@ describe('dogma / template', function () {
       })
     })
 
-    it('parse element with single attrubute (double quotes)', function () {
+    it('parses element with single attrubute (double quotes)', function () {
       expect(t`<input disabled="disabled"/>`).to.eql({
         attributes: {
           disabled: 'disabled'
@@ -352,7 +352,7 @@ describe('dogma / template', function () {
       })
     })
 
-    it('parse element with single attrubute (no quotes)', function () {
+    it('parses element with single attrubute (no quotes)', function () {
       expect(t`<input disabled=disabled/>`).to.eql({
         attributes: {
           disabled: 'disabled'
@@ -360,6 +360,396 @@ describe('dogma / template', function () {
         childNodes: [],
         localName: 'input',
         nodeType: window.Node.ELEMENT_NODE
+      })
+    })
+
+    it('parses element with child text node', function () {
+      expect(t`<h1>Test</h1>`).to.eql({
+        attributes: {},
+        childNodes: [
+          {
+            nodeType: window.Node.TEXT_NODE,
+            textContent: 'Test'
+          }
+        ],
+        localName: 'h1',
+        nodeType: window.Node.ELEMENT_NODE
+      })
+    })
+
+    describe('when element with single child', function () {
+      it('parses single inline element child with no whitespace before /', function () {
+        expect(t`<div><span/></div>`).to.eql({
+          attributes: {},
+          childNodes: [
+            {
+              attributes: {},
+              childNodes: [],
+              localName: 'span',
+              nodeType: window.Node.ELEMENT_NODE
+            }
+          ],
+          localName: 'div',
+          nodeType: window.Node.ELEMENT_NODE
+        })
+      })
+
+      it('parses single inline element child with space before /', function () {
+        expect(t`<div><span /></div>`).to.eql({
+          attributes: {},
+          childNodes: [
+            {
+              attributes: {},
+              childNodes: [],
+              localName: 'span',
+              nodeType: window.Node.ELEMENT_NODE
+            }
+          ],
+          localName: 'div',
+          nodeType: window.Node.ELEMENT_NODE
+        })
+      })
+
+      it('parses single inline element child with tab before /', function () {
+        expect(t`<div><span\t/></div>`).to.eql({
+          attributes: {},
+          childNodes: [
+            {
+              attributes: {},
+              childNodes: [],
+              localName: 'span',
+              nodeType: window.Node.ELEMENT_NODE
+            }
+          ],
+          localName: 'div',
+          nodeType: window.Node.ELEMENT_NODE
+        })
+      })
+
+      it('parses single inline element child with newline before /', function () {
+        expect(t`<div><span\n/></div>`).to.eql({
+          attributes: {},
+          childNodes: [
+            {
+              attributes: {},
+              childNodes: [],
+              localName: 'span',
+              nodeType: window.Node.ELEMENT_NODE
+            }
+          ],
+          localName: 'div',
+          nodeType: window.Node.ELEMENT_NODE
+        })
+      })
+
+      it('parses single inline element child with mixed spacing before /', function () {
+        expect(t`<div><span\n \t/></div>`).to.eql({
+          attributes: {},
+          childNodes: [
+            {
+              attributes: {},
+              childNodes: [],
+              localName: 'span',
+              nodeType: window.Node.ELEMENT_NODE
+            }
+          ],
+          localName: 'div',
+          nodeType: window.Node.ELEMENT_NODE
+        })
+      })
+
+      it('parses single element child with close tag', function () {
+        expect(t`<div><span></span></div>`).to.eql({
+          attributes: {},
+          childNodes: [
+            {
+              attributes: {},
+              childNodes: [],
+              localName: 'span',
+              nodeType: window.Node.ELEMENT_NODE
+            }
+          ],
+          localName: 'div',
+          nodeType: window.Node.ELEMENT_NODE
+        })
+      })
+    })
+
+    describe('when element with multiple children', function () {
+      describe('when first child is inline element', function () {
+        it('parses single inline element child with no whitespace before /', function () {
+          expect(t`<div><input/><span/></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'input',
+                nodeType: window.Node.ELEMENT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses single inline element child with space before /', function () {
+          expect(t`<div><input/><span /></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'input',
+                nodeType: window.Node.ELEMENT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses single inline element child with tab before /', function () {
+          expect(t`<div><input/><span\t/></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'input',
+                nodeType: window.Node.ELEMENT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses single inline element child with newline before /', function () {
+          expect(t`<div><input/><span\n/></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'input',
+                nodeType: window.Node.ELEMENT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses single inline element child with mixed spacing before /', function () {
+          expect(t`<div><input/><span\n \t/></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'input',
+                nodeType: window.Node.ELEMENT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses single element child with close tag', function () {
+          expect(t`<div><input/><span></span></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'input',
+                nodeType: window.Node.ELEMENT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses text node', function () {
+          expect(t`<div><input/>Test</div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'input',
+                nodeType: window.Node.ELEMENT_NODE
+              },
+              {
+                textContent: 'Test',
+                nodeType: window.Node.TEXT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+      })
+
+      describe('when first child is text node', function () {
+        it('parses single inline element child with no whitespace before /', function () {
+          expect(t`<div>Test<span/></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                textContent: 'Test',
+                nodeType: window.Node.TEXT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses single inline element child with space before /', function () {
+          expect(t`<div>Test<span /></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                textContent: 'Test',
+                nodeType: window.Node.TEXT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses single inline element child with tab before /', function () {
+          expect(t`<div>Test<span\t/></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                textContent: 'Test',
+                nodeType: window.Node.TEXT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses single inline element child with newline before /', function () {
+          expect(t`<div>Test<span\n/></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                textContent: 'Test',
+                nodeType: window.Node.TEXT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses single inline element child with mixed spacing before /', function () {
+          expect(t`<div>Test<span\n \t/></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                textContent: 'Test',
+                nodeType: window.Node.TEXT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses single element child with close tag', function () {
+          expect(t`<div>Test<span></span></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                textContent: 'Test',
+                nodeType: window.Node.TEXT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
       })
     })
   })

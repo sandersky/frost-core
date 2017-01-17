@@ -212,6 +212,8 @@ function parseElement ({allowSiblings, currentToken, start, tokens}) {
         newStart: null
       }
     }
+
+    start += 2
   }
 
   // If element tag is not inline (i.e. <foo></foo> instead of <foo/>)
