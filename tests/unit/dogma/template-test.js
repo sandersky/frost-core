@@ -363,20 +363,6 @@ describe('dogma / template', function () {
       })
     })
 
-    it('parses element with child text node', function () {
-      expect(t`<h1>Test</h1>`).to.eql({
-        attributes: {},
-        childNodes: [
-          {
-            nodeType: window.Node.TEXT_NODE,
-            textContent: 'Test'
-          }
-        ],
-        localName: 'h1',
-        nodeType: window.Node.ELEMENT_NODE
-      })
-    })
-
     describe('when element with single child', function () {
       it('parses single inline element child with no whitespace before /', function () {
         expect(t`<div><span/></div>`).to.eql({
@@ -470,6 +456,84 @@ describe('dogma / template', function () {
             }
           ],
           localName: 'div',
+          nodeType: window.Node.ELEMENT_NODE
+        })
+      })
+
+      it('parses text node child', function () {
+        expect(t`<h1>Test</h1>`).to.eql({
+          attributes: {},
+          childNodes: [
+            {
+              nodeType: window.Node.TEXT_NODE,
+              textContent: 'Test'
+            }
+          ],
+          localName: 'h1',
+          nodeType: window.Node.ELEMENT_NODE
+        })
+      })
+
+      it('parses text node child from substitution', function () {
+        const text = 'Test'
+
+        expect(t`<h1>${text}</h1>`).to.eql({
+          attributes: {},
+          childNodes: [
+            {
+              nodeType: window.Node.TEXT_NODE,
+              textContent: 'Test'
+            }
+          ],
+          localName: 'h1',
+          nodeType: window.Node.ELEMENT_NODE
+        })
+      })
+
+      it('parses text node child from text plus substitution', function () {
+        const text = 'st'
+
+        expect(t`<h1>Te${text}</h1>`).to.eql({
+          attributes: {},
+          childNodes: [
+            {
+              nodeType: window.Node.TEXT_NODE,
+              textContent: 'Test'
+            }
+          ],
+          localName: 'h1',
+          nodeType: window.Node.ELEMENT_NODE
+        })
+      })
+
+      it('parses text node child from substitution plus text', function () {
+        const text = 'Te'
+
+        expect(t`<h1>${text}st</h1>`).to.eql({
+          attributes: {},
+          childNodes: [
+            {
+              nodeType: window.Node.TEXT_NODE,
+              textContent: 'Test'
+            }
+          ],
+          localName: 'h1',
+          nodeType: window.Node.ELEMENT_NODE
+        })
+      })
+
+      it('parses text node child from text plus substitution plus text', function () {
+        const text = 'es'
+
+        expect(t`<h1>T${text}t</h1>`).to.eql({
+          attributes: {},
+          childNodes: [
+            {
+              nodeType: window.Node.TEXT_NODE,
+              textContent: 'Test'
+            }
+          ],
+          localName: 'h1',
           nodeType: window.Node.ELEMENT_NODE
         })
       })
@@ -617,6 +681,160 @@ describe('dogma / template', function () {
                 attributes: {},
                 childNodes: [],
                 localName: 'input',
+                nodeType: window.Node.ELEMENT_NODE
+              },
+              {
+                textContent: 'Test',
+                nodeType: window.Node.TEXT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+      })
+
+      describe('when first child is element with close tag', function () {
+        it('parses single inline element child with no whitespace before /', function () {
+          expect(t`<div><em></em><span/></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'em',
+                nodeType: window.Node.ELEMENT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses single inline element child with space before /', function () {
+          expect(t`<div><em></em><span /></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'em',
+                nodeType: window.Node.ELEMENT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses single inline element child with tab before /', function () {
+          expect(t`<div><em></em><span\t/></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'em',
+                nodeType: window.Node.ELEMENT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses single inline element child with newline before /', function () {
+          expect(t`<div><em></em><span\n/></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'em',
+                nodeType: window.Node.ELEMENT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses single inline element child with mixed spacing before /', function () {
+          expect(t`<div><em></em><span\n \t/></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'em',
+                nodeType: window.Node.ELEMENT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses single element child with close tag', function () {
+          expect(t`<div><em></em><span></span></div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'em',
+                nodeType: window.Node.ELEMENT_NODE
+              },
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'span',
+                nodeType: window.Node.ELEMENT_NODE
+              }
+            ],
+            localName: 'div',
+            nodeType: window.Node.ELEMENT_NODE
+          })
+        })
+
+        it('parses text node', function () {
+          expect(t`<div><em></em>Test</div>`).to.eql({
+            attributes: {},
+            childNodes: [
+              {
+                attributes: {},
+                childNodes: [],
+                localName: 'em',
                 nodeType: window.Node.ELEMENT_NODE
               },
               {
